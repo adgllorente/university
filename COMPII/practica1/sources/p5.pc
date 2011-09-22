@@ -1,0 +1,101 @@
+%---------------------------------------------------------------------
+% AUTOR: Adrián Gómez Llorente
+% NIP: 605731
+% DESCRIPCIÓN: Este programa contiene llamadas a acciones para
+% controlar la visibilidad en cada uno de los casos
+%---------------------------------------------------------------------
+
+Programa p;
+entero e;
+booleano b;
+caracter c;
+	accion A1;
+		entero e1;
+		booleano b1;
+		caracter c1;
+		accion A2;
+			entero e2;
+			booleano b2;
+			caracter c2;
+			accion A3;
+				entero e3;
+				booleano b3;
+				caracter c3;
+				
+			Principio
+				%VISIBILIDAD DE ACCIONES
+				A1; %visible
+				A2; %visible
+				A3; %visible
+				%VISIBILIDAD DE VARIABLES
+				e := 1; %visible
+				e1 := 1; %visible
+				e2 := 1; %visible
+				e3 := 1; %visible
+				b := true; %visible
+				b1 := true; %visible
+				b2 := true; %visible
+				b3 := true; %visible
+				c := 'a'; %visible
+				c1 := 'a'; %visible
+				c2 := 'a'; %visible
+				c3 := 'a'; %visible
+			Fin
+		Principio
+			%VISIBILIDAD DE ACCIONES
+			A1; %visible
+			A2; %visible
+			A3; %visible
+			%VISIBILIDAD DE VARIABLES
+			e := 1; %visible
+			e1 := 1; %visible
+			e2 := 1; %visible
+			e3 := 1;
+			b := true; %visible
+			b1 := true; %visible
+			b2 := true; %visible
+			b3 := true;
+			c := 'a'; %visible
+			c1 := 'a'; %visible
+			c2 := 'a'; %visible
+			c3 := 'a';
+		Fin
+	Principio
+		%VISIBILIDAD DE ACCIONES
+		A1; %visible
+		A2; %visible
+		A3;
+		%VISIBILIDAD DE VARIABLES
+		e := 1; %visible
+		e1 := 1; %visible
+		e2 := 1;
+		e3 := 1;
+		b := true; %visible
+		b1 := true; %visible
+		b2 := true;
+		b3 := true;
+		c := 'a'; %visible
+		c1 := 'a'; %visible
+		c2 := 'a';
+		c3 := 'a';
+	Fin
+	
+Principio
+	%VISIBILIDAD DE ACCIONES
+	A1; %visible
+	A2;
+	A3;
+	%VISIBILIDAD DE VARIABLES
+	e := 1; %visible
+	e1 := 1;
+	e2 := 1;
+	e3 := 1;
+	b := true; %visible
+	b1 := true;
+	b2 := true;
+	b3 := true;
+	c := 'a'; %visible
+	c1 := 'a';
+	c2 := 'a';
+	c3 := 'a';
+Fin

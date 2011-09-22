@@ -1,0 +1,10 @@
+##Connection
+name:VoIP
+packet_size:160
+frequency:20
+rate:64
+##Connection
+name:IPTV
+packet_size:1316
+frequency:10
+rate:1024

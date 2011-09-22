@@ -1,0 +1,167 @@
+MEM: 0x0001000
+
+1769:   ./a.out
+0080c000      4K r-x--    [ anon ]
+00912000    112K r-x--  /lib/ld-2.12.1.so
+0092e000      4K r----  /lib/ld-2.12.1.so
+0092f000      4K rw---  /lib/ld-2.12.1.so
+00d0b000   1372K r-x--  /lib/libc-2.12.1.so
+00e62000      4K -----  /lib/libc-2.12.1.so
+00e63000      8K r----  /lib/libc-2.12.1.so
+00e65000      4K rw---  /lib/libc-2.12.1.so
+00e66000     12K rw---    [ anon ]
+08048000      4K r-x--  /home/kuve/Documentos/ISOS/zones/a.out
+08049000      4K r----  /home/kuve/Documentos/ISOS/zones/a.out
+0804a000      4K rw---  /home/kuve/Documentos/ISOS/zones/a.out
+08728000    136K rw---    [ anon ]
+b77af000      4K rw---    [ anon ]
+b77be000      8K rw---    [ anon ]
+bfe51000    132K rw---    [ stack ]
+ total     1816K
+
+########################
+MEM: 10B
+
+1816:   ./a.out
+00110000   1372K r-x--  /lib/libc-2.12.1.so
+00267000      4K -----  /lib/libc-2.12.1.so
+00268000      8K r----  /lib/libc-2.12.1.so
+0026a000      4K rw---  /lib/libc-2.12.1.so
+0026b000     12K rw---    [ anon ]
+00b5e000      4K r-x--    [ anon ]
+00f71000    112K r-x--  /lib/ld-2.12.1.so
+00f8d000      4K r----  /lib/ld-2.12.1.so
+00f8e000      4K rw---  /lib/ld-2.12.1.so
+08048000      4K r-x--  /home/kuve/Documentos/ISOS/zones/a.out
+08049000      4K r----  /home/kuve/Documentos/ISOS/zones/a.out
+0804a000      4K rw---  /home/kuve/Documentos/ISOS/zones/a.out
+09fdb000    132K rw---    [ anon ]
+b76f6000      4K rw---    [ anon ]
+b7705000      8K rw---    [ anon ]
+bfd68000    132K rw---    [ stack ]
+ total     1812K
+
+##############################
+MEM: 1000B
+
+1828:   ./a.out
+003f7000   1372K r-x--  /lib/libc-2.12.1.so
+0054e000      4K -----  /lib/libc-2.12.1.so
+0054f000      8K r----  /lib/libc-2.12.1.so
+00551000      4K rw---  /lib/libc-2.12.1.so
+00552000     12K rw---    [ anon ]
+00b52000      4K r-x--    [ anon ]
+00d31000    112K r-x--  /lib/ld-2.12.1.so
+00d4d000      4K r----  /lib/ld-2.12.1.so
+00d4e000      4K rw---  /lib/ld-2.12.1.so
+08048000      4K r-x--  /home/kuve/Documentos/ISOS/zones/a.out
+08049000      4K r----  /home/kuve/Documentos/ISOS/zones/a.out
+0804a000      4K rw---  /home/kuve/Documentos/ISOS/zones/a.out
+08b10000    132K rw---    [ anon ]
+b7709000      4K rw---    [ anon ]
+b7718000      8K rw---    [ anon ]
+bfdbb000    132K rw---    [ stack ]
+ total     1812K
+
+#############################
+MEM: 100000B
+
+1843:   ./a.out
+00562000    112K r-x--  /lib/ld-2.12.1.so
+0057e000      4K r----  /lib/ld-2.12.1.so
+0057f000      4K rw---  /lib/ld-2.12.1.so
+00820000      4K r-x--    [ anon ]
+00bae000   1372K r-x--  /lib/libc-2.12.1.so
+00d05000      4K -----  /lib/libc-2.12.1.so
+00d06000      8K r----  /lib/libc-2.12.1.so
+00d08000      4K rw---  /lib/libc-2.12.1.so
+00d09000     12K rw---    [ anon ]
+08048000      4K r-x--  /home/kuve/Documentos/ISOS/zones/a.out
+08049000      4K r----  /home/kuve/Documentos/ISOS/zones/a.out
+0804a000      4K rw---  /home/kuve/Documentos/ISOS/zones/a.out
+083ee000    228K rw---    [ anon ]
+b77e3000      4K rw---    [ anon ]
+b77f2000      8K rw---    [ anon ]
+bfc36000    132K rw---    [ stack ]
+ total     1908K
+
+###########################
+MEM: 10000000B
+
+1855:   ./a.out
+001f5000      4K r-x--    [ anon ]
+001f6000   1372K r-x--  /lib/libc-2.12.1.so
+0034d000      4K -----  /lib/libc-2.12.1.so
+0034e000      8K r----  /lib/libc-2.12.1.so
+00350000      4K rw---  /lib/libc-2.12.1.so
+00351000     12K rw---    [ anon ]
+003aa000    112K r-x--  /lib/ld-2.12.1.so
+003c6000      4K r----  /lib/ld-2.12.1.so
+003c7000      4K rw---  /lib/ld-2.12.1.so
+08048000      4K r-x--  /home/kuve/Documentos/ISOS/zones/a.out
+08049000      4K r----  /home/kuve/Documentos/ISOS/zones/a.out
+0804a000      4K rw---  /home/kuve/Documentos/ISOS/zones/a.out
+b6e7f000   9772K rw---    [ anon ]
+b7818000      8K rw---    [ anon ]
+bfe69000    132K rw---    [ stack ]
+ total    11448K
+
+##############################
+MEM: 10000000B
+FREE 1: 5000000B
+FREE 2: 5000000B
+
+1882:   ./a.out
+0018e000    112K r-x--  /lib/ld-2.12.1.so
+001aa000      4K r----  /lib/ld-2.12.1.so
+001ab000      4K rw---  /lib/ld-2.12.1.so
+00708000   1372K r-x--  /lib/libc-2.12.1.so
+0085f000      4K -----  /lib/libc-2.12.1.so
+00860000      8K r----  /lib/libc-2.12.1.so
+00862000      4K rw---  /lib/libc-2.12.1.so
+00863000     12K rw---    [ anon ]
+00897000      4K r-x--    [ anon ]
+08048000      4K r-x--  /home/kuve/Documentos/ISOS/zones/a.out
+08049000      4K r----  /home/kuve/Documentos/ISOS/zones/a.out
+0804a000      4K rw---  /home/kuve/Documentos/ISOS/zones/a.out
+b6ef8000   9772K rw---    [ anon ]
+b7891000      8K rw---    [ anon ]
+bfdd0000    132K rw---    [ stack ]
+ total    11448K
+
+1882:   ./a.out
+0018e000    112K r-x--  /lib/ld-2.12.1.so
+001aa000      4K r----  /lib/ld-2.12.1.so
+001ab000      4K rw---  /lib/ld-2.12.1.so
+00708000   1372K r-x--  /lib/libc-2.12.1.so
+0085f000      4K -----  /lib/libc-2.12.1.so
+00860000      8K r----  /lib/libc-2.12.1.so
+00862000      4K rw---  /lib/libc-2.12.1.so
+00863000     12K rw---    [ anon ]
+00897000      4K r-x--    [ anon ]
+08048000      4K r-x--  /home/kuve/Documentos/ISOS/zones/a.out
+08049000      4K r----  /home/kuve/Documentos/ISOS/zones/a.out
+0804a000      4K rw---  /home/kuve/Documentos/ISOS/zones/a.out
+b6ef8000   4884K rw---    [ anon ]
+b7882000      4K rw---    [ anon ]
+b7891000      8K rw---    [ anon ]
+bfdd0000    132K rw---    [ stack ]
+ total     6564K
+
+1882:   ./a.out
+0018e000    112K r-x--  /lib/ld-2.12.1.so
+001aa000      4K r----  /lib/ld-2.12.1.so
+001ab000      4K rw---  /lib/ld-2.12.1.so
+00708000   1372K r-x--  /lib/libc-2.12.1.so
+0085f000      4K -----  /lib/libc-2.12.1.so
+00860000      8K r----  /lib/libc-2.12.1.so
+00862000      4K rw---  /lib/libc-2.12.1.so
+00863000     12K rw---    [ anon ]
+00897000      4K r-x--    [ anon ]
+08048000      4K r-x--  /home/kuve/Documentos/ISOS/zones/a.out
+08049000      4K r----  /home/kuve/Documentos/ISOS/zones/a.out
+0804a000      4K rw---  /home/kuve/Documentos/ISOS/zones/a.out
+b7882000      4K rw---    [ anon ]
+b7891000      8K rw---    [ anon ]
+bfdd0000    132K rw---    [ stack ]
+ total     1680K

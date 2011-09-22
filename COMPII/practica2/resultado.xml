@@ -1,0 +1,11 @@
+<Programa name="P;">
+	<declaracion_variables>
+		<var nombre="I" tipo="entero">
+		<var nombre="K" tipo="entero">
+		<var nombre="L" tipo="entero">
+		<var nombre="J" tipo="caracter">
+		<var nombre="B" tipo="booleano">
+	</declaracion_variables>
+	<declaracion_acciones>
+	</declaracion_acciones>
+</Programa>

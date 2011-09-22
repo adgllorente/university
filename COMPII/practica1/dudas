@@ -1,0 +1,16 @@
+## 22/03/2011
+	- En el fichero .L constChar no debería estar definido como \'[^\']\'
+		· Lo mirara
+## 23/03/2011
+	- ¿Es mejor que el tIDENTIFICADOR sea de un tipo "identificador" o de tipo SIMBOLO *
+	  Dependerá de la cantidad de información que vayamos a necesitar ¿Cuánta información
+	  necesitaremos? 
+		· Por ahora he decidido que un SIMBOLO
+## 24/03/2011
+	- ¿A qué se refiere con "dir" en insertar_variable de tabla.h?
+		· Por ahora lo que quiera. En la siguiente practica veremos.
+## 27/03/2011
+	- Al usar "expresión" en la cabecera de una acción se lanzan las acciones de inserción de simbolos en la tabla de simbolos ¿Es esto necesario? 
+		· 
+## 07/04/2011
+	- ¿El tipo de los índices de un vector debe ser el mismo que el de los valores?

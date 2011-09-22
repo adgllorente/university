@@ -1,0 +1,63 @@
+%---------------------------------------------------------------------
+% AUTOR: Adrián Gómez Llorente
+% NIP: 605731
+% DESCRIPCIÓN: Este programa contiene llamadas a acciones para
+% asegurar que el control de parámetros es el correcto
+%---------------------------------------------------------------------
+
+Programa p;
+entero e;
+booleano b;
+caracter c;
+vector [1..10] de entero ve;
+vector [1..10] de booleano vb;
+vector [1..10] de caracter vc;
+
+	accion Acc1(val entero e1,e2; val booleano b1,b2; ref caracter c1,c2);
+	Principio
+		%NO HACEMOS NADA
+	Fin
+	
+Principio
+	%--> Controlamos el número de parámetros
+	
+	%OK
+	Acc1(e,2*3+1,true,b,c,c);
+	Acc1(e,2,true,5<6,c,c);
+	Acc1(ve[2+3+1],ve[2*3],vb[1],b,c,c);
+	
+	%NOK
+	Acc1(e);
+	Acc1;
+	Acc1(e,2*3+1,true,b,c,c,c,c,12,12+4);
+		
+	%--> Controlamos el tipo de parámetros
+	
+	%NOK
+	Acc1(e,b,5,b,c,c); %p2 no es correcto
+	Acc1(e,b,5,b,c,2+3); %p5 VAL
+	Acc1(true,b,5,2<3,c,c); %p1 no es del tipo esperado
+	Acc1(vb[1],vb[2],ve[1],ve[3],ve[5],vb[1]); %Todos incorrectos
+	
+	%--> Controlamos el tipo de parámetros con expresiones
+	
+	%OK
+	Acc1(1+e*2-5,2*3+1,true,b,c,c);
+	Acc1(1+e*2-5,(4 div 2)*5,5<6,b,c,c);
+	Acc1(1+e*2-5,2*3+1,8+3<6,b,c,c);
+	Acc1(1+e*2-5,caraent('c')+6,8+3<6,b,c,c);
+	
+Fin
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	

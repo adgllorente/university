@@ -1,0 +1,124 @@
+%------------------------------------------------------------
+% 
+% UNIT TESTING: CONTROL DE TIPOS
+%
+%------------------------------------------------------------
+Programa p;
+	
+	entero e;
+	booleano b;
+	caracter c;
+	
+	%#### OK UNIT TESTING
+	
+	vector [1..10] de entero ve; %OK
+	vector [2..5] de entero vee1; %OK
+	vector ['a'..'z'] de caracter vc; %OK
+	vector [false..true] de booleano vb; %OK
+	
+	%#### NOK UNIT TESTING
+	vector [true..10] de entero ve1; %NOK
+	vector ['a'..10] de entero ve2; %NOK
+	vector [true..false] de entero ve4; %NOK
+	vector [true..'z'] de caracter vc1; %NOK
+	vector ['a'..5] de caracter vc2; %NOK
+	vector [true..false] de caracter vc4; %NOK
+	vector ['a'..10] de booleano vb1; %NOK
+	
+Principio
+
+	%#### OK UNIT TESTING
+	
+	%--> ENTEROS
+	e := 1; %OK
+	e := 1+5; %OK
+	e := 1-5; %OK
+	e := 11*100; %OK
+	e := 10 div 5; %OK
+	b := e < 5; %OK
+	b := e > 5; %OK
+	b := e = 3; %OK
+	b := e >= 5; %OK
+	b := e <= 5; %OK
+	b := 5 <= 5; %OK
+	b := 5 >= 5; %OK
+	b := 5 = 5; %OK
+	b := 5 < 5; %OK
+	b := 5 > 5; %OK
+	b := 5 <= e; %OK
+	b := 5 >= e; %OK
+	b := 5 = e; %OK
+	b := 5 < e; %OK
+	b := 5 > e; %OK
+	b := 5+6-2 <= e+e; %OK
+	b := 5+6-2 >= e+e; %OK
+	b := 5+6-2 = e+e; %OK
+	b := 5+6-2 < e+e; %OK
+	b := 5+6-2 > e+e; %OK
+	
+	%-->BOOLEANOS (Ya hemos tenido en cuenta muchos casos en ENTEROS)
+	b := true; %OK
+	b := false; %OK
+	b := 'a' < 'b'; %OK
+	b := 2>3; %OK
+	b := vb[true]; %OK
+	b := ve[2] > ve[3]; %OK
+	
+	%-->CARACTERES
+	c := 'a'; %OK
+	c := '5'; %OK
+	
+	%-->VECTORES
+	ve[1] := ve[2]; %OK
+	ve[1] := 2; %OK
+	ve[1] := 2+3; %OK
+	e := 1;
+	ve[1] := ve[2+3+e]; %OK
+	ve[e] := e; %OK
+	vb[true] := vb[true]; %OK
+	vb[true] := vb[false]; %OK
+	vb[true] := 5<3; %OK
+	vb[true] := e<>5; %OK
+	vb[true] := b; %OK
+	vc['a'] := c; %OK
+	vc['a'] := 'a'; %OK
+	ve := ve; %OK
+	vc := vc; %OK
+	vb := vb; %OK
+	
+	%NOK UNIT TESTING
+	
+	%--> ENTEROS
+	e := 'a'; %NOK
+	e := true; %NOK
+	
+	%--> BOOLEANOS
+	b := 'a'; %NOK
+	b := 5; %NOK
+	
+	%-->CARACTERES
+	c := 'abc'; %NOK
+	c := 5; %NOK
+	c := true; %NOK
+	
+	%-->VECTORES
+	ve := ve[2]; %NOK
+	ve[1] := 'a'; %NOK
+	ve[1] := true; %NOK
+	ve[1] := 3<4; %NOK
+	ve[1] := ve[1+2-b]; %NOK
+	ve[true] := 2; %NOK
+	ve['a'] := 2; %NOK
+	vb := vb[true]; %NOK
+	vb[true] := 3; %NOK
+	vb[true] := 'a'; %NOK
+	vb[true] := 3+5; %NOK
+	vb['a'] := true; %NOK
+	vb[3] := true; %NOK
+	vc[2] := 'a'; %NOK
+	vc[true] := 'a'; %NOK
+	vc['a'] := 3+5; %NOK
+	vc := vc['a']; %NOK
+	ve := vee1; %NOK
+	
+Fin

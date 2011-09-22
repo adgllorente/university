@@ -1,0 +1,116 @@
+%-----------------------------------------------------------
+% Fichero:       mcd.pc
+% Tema:          Para calcular el m'aximo com'un divisor
+% Fecha:         Curso 99/00
+% Fuente:        Propio
+% Com.:          Usaremos el m'etodo de Euclides
+% Transformado: Luis Calros Gallego
+% Comentarios: Se ha transformado el fuente para que de una 
+%					serie de errores semanticos
+% ERRORES (en orden de aparicion):	
+%				* Accion a1 tiene mismo nombre que una variable
+%					del mismo nivel 
+%				* Var no definida en a1
+%				* Parametros repetidos.
+%				* 2 Errores, a1 debe ser var o param y en expresion lo mismo
+%				(ESTE FALLO COMPRUEBA LA VISIBILIDAD)
+%				* 4 Errores:3 No se puede usar cadena en operandos y
+%				  un parametros de distinto tipo
+%				* Faltan parametros en la invocacion a la accion
+%				* Accion no definida
+%				* En el lado derecho de asignacion hay una cadena
+%				* Tipos incompatibles en expresion (Op 1 debe ser entero)
+%				* ENTACAR debe recibir entero
+%				* Tipos incompatibles en asignacion
+%				* Variable no definida (HOMBRE)
+%				* ID debe ser parametro o variable (DATO)
+%				* ID no declarado (de nuevo hombre)
+%				* Se le pasa expresion compuesta a param por ref
+%				* Accion no definida.
+% NOTA:  si os da segmentation fault core dump puede ser que
+%			que no oculteis o borreis los parametros de acciones
+%			cerradas.
+%-----------------------------------------------------------
+
+Programa p;
+entero i, j, m, a1;
+booleano fallo,semos,hambre;
+
+accion a1 (REF ENTERO a);
+Principio
+	a:=b;
+Fin
+accion a2 (val entero b);
+	booleano m;
+	accion a3(ref entero n,n,pez);
+	Principio
+		n:=n+1;
+	Fin
+	accion a1;
+	Principio
+		a1:=a1+1;
+		caca(j);
+		caca(j);
+		fallo:='hola'='hola';
+		fallo:="a">="c";
+		fallo:='hola'>2;
+		fallo:=1>3;
+	Fin
+Principio
+	a3(b);
+Fin
+%-----------------------------------------------------------
+accion dato (ref entero d);
+%-----------------------------------------------------------
+entero num;
+Principio
+		  caca(j);
+		  a3(d);
+		  a3(d);
+		  d:=num;
+        d:=0;
+		  d:='hola';
+		  d:=fallo+3;
+		  fallo:=entacar(fallo);
+		  d:=hombre;
+		  leer(dato);
+        Mq d<=0
+                escribir('Escribe un numero: ');
+                leer(d);
+                Si d<=0 ent
+                        escribir('El numero debe ser postivo.');
+                        escribir (entacar (13), entacar (10));
+                FSi
+        FMq
+		  
+Fin
+
+%-----------------------------------------------------------
+accion mcd(Val entero  a,b ; ref  entero  m );
+%-----------------------------------------------------------
+entero r;
+Principio
+        r:=a mod b;
+		  
+        Mq r<>0
+                a:=b;
+                b:=r;
+                r:=a mod b;
+        FMq
+		m := b;
+Fin
+
+%-----------------------------------------------------------
+Principio
+		 a1:=1;
+		  hombre:=1;
+		  dato(hombre);
+        dato(i);
+        dato(j);
+        mcd (i,j,m);
+		  mcd(i,j,m*i);
+		  ccd(i,j,m);
+		  mcd;
+        escribir('El MCD es: ', m);
+        escribir (entacar (13), entacar (10));
+Fin

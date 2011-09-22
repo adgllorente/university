@@ -1,0 +1,27 @@
+%-------------------------------------------------------------------
+programa parImpar;
+%-------------------------------------------------------------------
+
+entero i, sumapar, sumaimpar;
+
+%-------------------------------------------------------------------
+principio
+%-------------------------------------------------------------------
+
+	i := 0;
+	sumapar := 0;
+	sumaimpar := 0;
+	
+	mq i <= 100
+		si (i mod 2) <> 0 ent
+			sumapar := sumapar + i;
+		si_no
+			sumaimpar := sumaimpar + i;
+		fsi
+		i := i + 1;
+	fmq
+
+	escribir('La suma de los pares es: ', sumapar, ' ');
+	escribir('La suma de los impares es: ', sumaimpar, ' ');
+
+fin

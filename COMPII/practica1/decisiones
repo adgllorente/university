@@ -1,0 +1,3 @@
+ - Se usará la comilla simple ' para indicar caracteres y cadenas
+ - La declaración de vectores mejor estática porque sino las comprobaciones tendrán que ser en ejecución
+ - No se permite la asignación de una componente de un vector a una variable

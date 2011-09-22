@@ -1,0 +1,1278 @@
+
+	.section	".text",#alloc,#execinstr,#progbits
+	.file	"gauss.c"
+
+	.section	".bss",#alloc,#write,#nobits
+
+Bbss.bss:
+	.common	B,32832,8
+	.type	B,#object
+	.common	P,32832,8
+	.type	P,#object
+	.common	A,134742528,8
+	.type	A,#object
+
+	.section	".data",#alloc,#write,#progbits
+
+Ddata.data:
+
+	.section	".rodata",#alloc,#progbits
+!
+! CONSTANT POOL
+!
+
+Drodata.rodata:
+
+	.section	".rodata1",#alloc,#progbits
+	.align	4
+!
+! CONSTANT POOL
+!
+
+.L18:
+	.ascii	"Uso:%s <tama\361o-matriz> <numero-de-iteraciones> <numero-de-pruebas>\n\000"
+	.align	4
+!
+! CONSTANT POOL
+!
+
+.L21:
+	.ascii	"ERROR: el tama\361o de la matriz (%d) debe ser menor que MAXSIZE (%d)\n\000"
+	.align	4
+!
+! CONSTANT POOL
+!
+
+.L26:
+	.ascii	"ERROR: el n\372mero de iteraciones y el de pruebas debe ser mayor que 0\n\000"
+	.align	4
+!
+! CONSTANT POOL
+!
+
+.L37:
+	.ascii	"\n******** Datos ********\n\000"
+	.align	4
+!
+! CONSTANT POOL
+!
+
+.L38:
+	.ascii	"Resolucion del temporizador: %7.1f usg (%d intervalos/seg)\n\000"
+	.align	4
+!
+! CONSTANT POOL
+!
+
+.L39:
+	.ascii	"Tama\361o_matriz, limit, repeat:  %dx%d, %d, %d\n\000"
+	.align	4
+!
+! CONSTANT POOL
+!
+
+.L40:
+	.ascii	"Ejecutando gauss v1.3.\n\n\000"
+	.align	4
+!
+! CONSTANT POOL
+!
+
+.L60:
+	.ascii	"*** Test %02d = %8.3f usg (%8.3f)\n\000"
+	.align	4
+!
+! CONSTANT POOL
+!
+
+.L63:
+	.ascii	"AVISO: tiempo de ejecuci\363n menor que la resoluci\363n del reloj\n\000"
+	.align	4
+!
+! CONSTANT POOL
+!
+
+.L67:
+	.ascii	"AVISO: tiempo de ejecuci\363n (%4.2f usg) menor que 20 ticks del reloj (%4.2f usg)\n\000"
+	.align	4
+!
+! CONSTANT POOL
+!
+
+.L71:
+	.ascii	"AVISO: Varianza de las mediciones demasiado alta\n\000"
+	.align	4
+!
+! CONSTANT POOL
+!
+
+.L72:
+	.ascii	"\n******** Resultados ********\n\000"
+	.align	4
+!
+! CONSTANT POOL
+!
+
+.L73:
+	.ascii	"Tiempo medio de ejecuci\363n de L/U    = %8.3f usg\n\000"
+	.align	4
+!
+! CONSTANT POOL
+!
+
+.L74:
+	.ascii	"Tiempo medio de ejecuci\363n de limit  = %8.0f usg\n\000"
+	.align	4
+!
+! CONSTANT POOL
+!
+
+.L75:
+	.ascii	"Tiempo total de ejecuci\363n de repeat = %8.0f usg\n\n\000"
+
+	.section	".text",#alloc,#execinstr,#progbits
+/* 000000	   0 */		.align	8
+!
+! CONSTANT POOL
+!
+                       
+
+			___const_seg_900000102:
+/* 000000	   0 */		.word	1074790400,0
+/* 0x0008	     */		.word	1073741824,0
+/* 0x0010	     */		.word	1093567616,0
+/* 0x0018	     */		.word	0,0
+/* 0x0020	     */		.word	1077149696,0
+/* 0x0028	     */		.word	1063549665,1202590843
+/* 0x0030	     */		.word	1072693248,0
+/* 0x0038	   0 */		.type	___const_seg_900000102,1
+/* 0x0038	   0 */		.size	___const_seg_900000102,(.-___const_seg_900000102)
+/* 0x0038	   0 */		.align	4
+! FILE gauss.c
+
+!    1		      !/*
+!    2		      ! * Fichero: gauss.c
+!    3		      ! * Version: 1.3 - Dic 2010
+!    4		      ! *
+!    5		      ! * Adaptación de gauss.c  (CS252, Spring 1994)
+!    6		      ! *
+!    7		      ! * Pablo Ibáñez
+!    8		      ! * Jesús Alastruey
+!    9		      ! */
+!   11		      !#include <stdio.h>
+!   12		      !#include <unistd.h>
+!   13		      !#include <stdlib.h>
+!   14		      !#include <sys/times.h>
+!   15		      !#include <time.h>
+!   16		      !#include <limits.h>
+!   17		      !#include <math.h>
+!   19		      ! /* No hay que cambiar MAXSIZE en cada ejecución (se define constante)
+!   20		      ! *  por tanto, no es necesario recompilar para ejecutar
+!   21		      ! * el programa con distintos tamaños de problema (matriz, vector)
+!   22		      ! */
+!   23		      !#define MAXSIZE		4104
+!   25		      !double A[MAXSIZE][MAXSIZE];
+!   26		      !double P[MAXSIZE];
+!   27		      !double B[MAXSIZE];
+!   29		      !int
+!   30		      !main(int argc, char *argv[])
+!   31		      !{
+
+!
+! SUBROUTINE main
+!
+! OFFSET    SOURCE LINE	LABEL	INSTRUCTION
+
+                       	.global main
+                       
+
+			main:
+/* 000000	  31 */		save	%sp,-592,%sp
+
+!   32		      !  int r, s, i, j, intervalos;
+!   33		      !  int repeat, limit, m_size;
+!   34		      !  struct tms time_info;
+!   35		      !  clock_t user0, user1, sample_cpu, sample_elapsed;
+!   36		      !  clock_t total = 0, total_sqrd = 0;
+
+/* 0x0004	  36 */		or	%g0,0,%i5
+/* 0x0008	     */		st	%i5,[%sp+120]
+/* 0x000c	   0 */		sethi	%hi(.L75),%g1
+
+!   37		      !  clock_t tinicio, tfinal, ttotal = 0;
+!   38		      !  clock_t etime0, etime1;
+!   39		      !  float timer_resolution;
+!   40		      !  float loop_mean, loop_var, test_mean, loop_std_ratio_c; 
+!   42		      !  if (argc < 4) {
+
+/* 0x0010	  42 */		cmp	%i0,4
+/* 0x0014	  36 */		or	%g0,0,%i5
+/* 0x0018	     */		st	%i5,[%sp+124]
+/* 0x001c	   0 */		add	%g1,%lo(.L75),%i4
+/* 0x0020	  42 */		bl,a,pt	%icc,.L900000155
+/* 0x0024	  43 */		ld	[%i1],%o1
+
+! Registers live out of main: 
+! o0 o1 sp l0 l4 l5 i0 i1 i3 i4 i5 fp i7 gsr 
+! 
+		
+!   43		      !    printf("Uso:%s <tamaño-matriz> <numero-de-iteraciones> <numero-de-pruebas>\n"
+!   43		      >, argv[0]);
+!   44		      !    exit(-1);
+!   45		      !  }
+!   47		      !  m_size = atoi(argv[1]);
+
+                       
+! predecessor blocks: main
+
+			.L77000093:
+/* 0x0028	  47 */		ld	[%i1+4],%o0
+
+! Registers live out of .L77000093: 
+! o0 sp l0 l4 l5 i0 i1 i3 i4 i5 fp i7 gsr 
+! 
+		                       
+! predecessor blocks: .L77000093 .L900000155
+
+			.L900000144:
+/* 0x002c	  47 */		call	atoi	! params =  %o0	! Result =  %o0
+/* 0x0030	  48 */		sethi	%hi(0x1000),%l3
+/* 0x0034	     */		add	%l3,8,%l7
+/* 0x0038	  47 */		or	%g0,%o0,%l1
+
+!   48		      !  if (m_size > MAXSIZE) {
+
+/* 0x003c	  48 */		cmp	%o0,%l7
+/* 0x0040	     */		bg,pt	%icc,.L900000154
+/* 0x0044	  49 */		sethi	%hi(__iob+32),%l0
+
+! Registers live out of .L900000144: 
+! o2 sp l0 l1 l4 l5 i0 i1 i3 i4 i5 fp i7 gsr 
+! 
+		
+!   49		      !      fprintf(stderr,"ERROR: el tamaño de la matriz (%d) debe ser menor que MAXSI
+!   49		      >ZE (%d)\n", m_size, MAXSIZE);
+!   50		      !      exit(1);
+!   51		      !  }
+!   52		      !   
+!   53		      !  limit = atoi(argv[2]);
+
+                       
+! predecessor blocks: .L900000144
+
+			.L77000097:
+/* 0x0048	  53 */		ld	[%i1+8],%o0
+
+! Registers live out of .L77000097: 
+! o0 sp l1 l4 l5 i0 i1 i3 i4 i5 fp i7 gsr 
+! 
+		                       
+! predecessor blocks: .L77000097 .L900000154
+
+			.L900000143:
+/* 0x004c	  53 */		call	atoi	! params =  %o0	! Result =  %o0
+/* 0x0050	     */		nop
+/* 0x0054	     */		or	%g0,%o0,%l0
+
+!   54		      !  repeat = atoi(argv[3]);
+
+/* 0x0058	  54 */		call	atoi	! params =  %o0	! Result =  %o0
+/* 0x005c	     */		ld	[%i1+12],%o0
+
+!   55		      !  if ((limit < 1) || (repeat < 1)) {
+
+/* 0x0060	  55 */		cmp	%l0,1
+/* 0x0064	     */		bl,pn	%icc,.L77000103
+/* 0x0068	  54 */		st	%o0,[%sp+160]
+
+! Registers live out of .L900000143: 
+! o0 o1 sp l0 l1 l4 l5 i0 i1 i3 i4 i5 fp i7 gsr 
+! 
+		                       
+! predecessor blocks: .L900000143
+
+			.L77000099:
+/* 0x006c	  55 */		ld	[%sp+160],%g4
+/* 0x0070	     */		cmp	%g4,1
+/* 0x0074	     */		bl,pn	%icc,.L77000103
+/* 0x0078	  61 */		add	%l1,-1,%i1
+
+! Registers live out of .L77000099: 
+! o0 o1 sp l0 l1 l4 l5 i0 i1 i3 i4 i5 fp i7 gsr 
+! 
+		                       
+! predecessor blocks: .L77000099 .L77000103
+
+			.L900000142:
+/* 0x007c	   0 */		sethi	%hi(___const_seg_900000102+40),%g1
+
+!   56		      !      fprintf(stderr,"ERROR: el número de iteraciones y el de pruebas debe ser ma
+!   56		      >yor que 0\n");
+!   57		      !      exit(1);
+!   58		      !  }
+!   59		      !  
+!   60		      !  /* Inicializacion */
+!   61		      !  for (i = 0; i < m_size ;i++) {
+
+/* 0x0080	  61 */		cmp	%l1,0
+/* 0x0084	     */		ble,pn	%icc,.L77000121
+/* 0x0088	   0 */		add	%g1,%lo(___const_seg_900000102+40),%i5
+
+! Registers live out of .L900000142: 
+! o0 sp l0 l1 l4 l5 i0 i1 i3 i4 i5 fp i7 gsr 
+! 
+		                       
+! predecessor blocks: .L900000142
+
+			.L77000193:
+/* 0x008c	  61 */		sethi	%hi(B),%l2
+/* 0x0090	     */		ldd	[%i5-40],%f54
+/* 0x0094	     */		sethi	%hi(P),%l3
+/* 0x0098	     */		sethi	%hi(A),%o2
+/* 0x009c	     */		sethi	%hi(0x8000),%l7
+/* 0x00a0	     */		ldd	[%i5-32],%f48
+/* 0x00a4	     */		or	%g0,0,%l4
+/* 0x00a8	     */		add	%l2,%lo(B),%l5
+
+!   62		      !    B[i] = (double) i + 4.0;    
+
+/* 0x00ac	  62 */		st	%l4,[%sp+188]
+/* 0x00b0	  61 */		add	%l3,%lo(P),%l2
+/* 0x00b4	     */		add	%o2,%lo(A),%i0
+/* 0x00b8	     */		add	%l7,64,%i2
+
+! Registers live out of .L77000193: 
+! o0 sp l0 l1 l2 l4 l5 i0 i1 i2 i3 i4 i5 fp i7 gsr 
+! f16 f22 
+		                       
+! predecessor blocks: .L77000117 .L77000193
+
+			.L900000152:
+/* 0x00bc	  62 */		ld	[%sp+188],%f14
+
+!   63		      !    P[i] = (double) i * 2.0;    
+!   64		      !    for (j = 0; j < m_size ; j++) {
+!   65		      !      A[i][j] = (double) i + (double) j;
+
+/* 0x00c0	  65 */		add	%i1,1,%o4
+/* 0x00c4	  64 */		or	%g0,0,%g2
+/* 0x00c8	  65 */		cmp	%o4,5
+/* 0x00cc	  64 */		or	%g0,%i0,%o7
+/* 0x00d0	  62 */		fitod	%f14,%f36
+/* 0x00d4	     */		faddd	%f36,%f54,%f60
+/* 0x00d8	  63 */		fmuld	%f36,%f48,%f42
+/* 0x00dc	  62 */		std	%f60,[%l5]
+/* 0x00e0	  63 */		std	%f42,[%l2]
+/* 0x00e4	  65 */		bl,pn	%icc,.L77000113
+/* 0x00e8	     */		nop
+
+! Registers live out of .L900000152: 
+! g2 o0 sp o7 l0 l1 l2 l4 l5 i0 i1 i2 i3 i4 i5 fp i7 gsr 
+! f4 f16 f22 
+		                       
+! predecessor blocks: .L900000152
+
+			.L900000138:
+/* 0x00ec	  65 */		st	%g2,[%sp+176]
+/* 0x00f0	     */		sethi	%hi(___const_seg_900000102+48),%o5
+/* 0x00f4	  64 */		add	%o7,8,%o7
+/* 0x00f8	  65 */		ldd	[%o5+%lo(___const_seg_900000102+48)],%f34
+/* 0x00fc	     */		sub	%i1,3,%g1
+/* 0x0100	  64 */		add	%g2,1,%g2
+/* 0x0104	  65 */		ld	[%sp+176],%f0
+/* 0x0108	     */		fitod	%f0,%f40
+/* 0x010c	     */		faddd	%f36,%f40,%f44
+/* 0x0110	     */		std	%f44,[%o7-8]
+/* 0x0114	     */		faddd	%f40,%f34,%f32
+
+! Registers live out of .L900000138: 
+! g1 g2 o0 sp o7 l0 l1 l2 l4 l5 i0 i1 i2 i3 i4 i5 fp i7 gsr y
+! f0 f2 f4 f16 f22 
+		                       
+! predecessor blocks: .L900000136 .L900000138
+
+			.L900000136:
+/* 0x0118	  65 */		prefetch	[%o7+272],22
+/* 0x011c	     */		faddd	%f32,%f34,%f60
+/* 0x0120	  64 */		add	%g2,4,%g2
+/* 0x0124	     */		add	%o7,32,%o7
+/* 0x0128	  65 */		faddd	%f36,%f32,%f46
+/* 0x012c	  64 */		cmp	%g2,%g1
+/* 0x0130	  65 */		std	%f46,[%o7-32]
+/* 0x0134	     */		faddd	%f60,%f34,%f32
+/* 0x0138	     */		faddd	%f36,%f60,%f62
+/* 0x013c	     */		std	%f62,[%o7-24]
+/* 0x0140	     */		faddd	%f32,%f34,%f58
+/* 0x0144	     */		faddd	%f36,%f32,%f38
+/* 0x0148	     */		std	%f38,[%o7-16]
+/* 0x014c	     */		faddd	%f58,%f34,%f32
+/* 0x0150	     */		faddd	%f36,%f58,%f56
+/* 0x0154	     */		std	%f56,[%o7-8]
+/* 0x0158	  64 */		ble,pt	%icc,.L900000136
+/* 0x015c	  65 */		nop
+
+! Registers live out of .L900000136: 
+! g1 g2 o0 sp o7 l0 l1 l2 l4 l5 i0 i1 i2 i3 i4 i5 fp i7 gsr y
+! f0 f2 f4 f16 f22 
+		                       
+! predecessor blocks: .L900000136
+
+			.L900000139:
+/* 0x0160	  64 */		cmp	%g2,%i1
+/* 0x0164	     */		bg,pn	%icc,.L77000117
+/* 0x0168	  65 */		nop
+
+! Registers live out of .L900000139: 
+! g2 o0 sp o7 l0 l1 l2 l4 l5 i0 i1 i2 i3 i4 i5 fp i7 gsr 
+! f4 f16 f22 
+		                       
+! predecessor blocks: .L900000139 .L900000152
+
+			.L77000113:
+/* 0x016c	  65 */		st	%g2,[%sp+176]
+
+! Registers live out of .L77000113: 
+! g2 o0 sp o7 l0 l1 l2 l4 l5 i0 i1 i2 i3 i4 i5 fp i7 gsr 
+! f4 f16 f22 
+		                       
+! predecessor blocks: .L77000113 .L900000153
+
+			.L900000153:
+/* 0x0170	  65 */		ld	[%sp+176],%f15
+/* 0x0174	  64 */		add	%g2,1,%g2
+/* 0x0178	     */		cmp	%g2,%i1
+/* 0x017c	  65 */		fitod	%f15,%f44
+/* 0x0180	     */		faddd	%f36,%f44,%f32
+/* 0x0184	     */		std	%f32,[%o7]
+/* 0x0188	  64 */		add	%o7,8,%o7
+/* 0x018c	     */		ble,a,pt	%icc,.L900000153
+/* 0x0190	  65 */		st	%g2,[%sp+176]
+
+! Registers live out of .L900000153: 
+! g2 o0 sp o7 l0 l1 l2 l4 l5 i0 i1 i2 i3 i4 i5 fp i7 gsr 
+! f4 f16 f22 
+		                       
+! predecessor blocks: .L900000139 .L900000153
+
+			.L77000117:
+/* 0x0194	  61 */		add	%l4,1,%l4
+/* 0x0198	     */		add	%l5,8,%l5
+/* 0x019c	     */		add	%l2,8,%l2
+/* 0x01a0	     */		add	%i0,%i2,%i0
+/* 0x01a4	     */		cmp	%l4,%i1
+/* 0x01a8	     */		ble,a,pt	%icc,.L900000152
+/* 0x01ac	  62 */		st	%l4,[%sp+188]
+
+! Registers live out of .L77000117: 
+! o0 sp l0 l1 l2 l4 l5 i0 i1 i2 i3 i4 i5 fp i7 gsr 
+! f16 f22 
+		
+!   66		      !    }
+!   67		      !  }
+!   69		      !  /*
+!   70		      !   * timer_resolution = resolucion en microsegundos del temporizador del computad
+!   70		      >or
+!   71		      !   * (tiempo en milisegundos entre dos ticks del temporizador) 
+!   72		      !   * Se calcula a partir del nº de intervalos que el temporizador cuenta cada seg
+!   72		      >undo.
+!   73		      !   * Para saber este nº de intervalos hay que usar la llamada sysconf(_SC_CLK_TCK
+!   73		      >).
+!   74		      !   * El programa realiza esta llamada e inicializa la variable timer_resolution.
+!   75		      !   */
+!   76		      !  intervalos = sysconf(_SC_CLK_TCK);
+
+                       
+! predecessor blocks: .L77000117 .L900000142
+
+			.L77000121:
+/* 0x01b0	  76 */		call	sysconf	! params =  %o0	! Result =  %o0
+/* 0x01b4	     */		or	%g0,3,%o0
+
+!   77		      !  timer_resolution = 1000000.0/intervalos;
+
+/* 0x01b8	  77 */		st	%o0,[%sp+188]
+/* 0x01bc	  76 */		or	%g0,%o0,%l6
+/* 0x01c0	  77 */		ldd	[%i5-24],%f50
+/* 0x01c4	     */		ld	[%sp+188],%f26
+/* 0x01c8	     */		fitod	%f26,%f38
+/* 0x01cc	     */		fdivd	%f50,%f38,%f34
+/* 0x01d0	     */		fdtos	%f34,%f14
+
+!   78		      !  
+!   79		      !  printf ("\n******** Datos ********\n");
+
+/* 0x01d4	  79 */		st	%f14,[%sp+180]
+/* 0x01d8	     */		call	printf	! params =  %o0	! Result = 
+/* 0x01dc	     */		add	%i4,-536,%o0
+
+!   80		      !  printf("Resolucion del temporizador: %7.1f usg (%d intervalos/seg)\n", timer_re
+!   80		      >solution, intervalos);
+
+/* 0x01e0	  80 */		ld	[%sp+180],%f14
+/* 0x01e4	     */		add	%i4,-508,%o0
+/* 0x01e8	     */		fstod	%f14,%f28
+/* 0x01ec	     */		st	%f28,[%sp+168]
+/* 0x01f0	     */		st	%f29,[%sp+172]
+/* 0x01f4	     */		ld	[%sp+168],%o1
+/* 0x01f8	     */		ld	[%sp+172],%o2
+/* 0x01fc	     */		call	printf	! params =  %o0 %o1 %o2 %o3	! Result = 
+/* 0x0200	     */		or	%g0,%l6,%o3
+
+!   81		      !  printf("Tamaño_matriz, limit, repeat:  %dx%d, %d, %d\n", m_size, m_size, limit,
+!   81		      > repeat);
+
+/* 0x0204	  81 */		ld	[%sp+160],%i2
+/* 0x0208	     */		add	%i4,-448,%o0
+/* 0x020c	     */		or	%g0,%l1,%o1
+/* 0x0210	     */		or	%g0,%l1,%o2
+/* 0x0214	     */		or	%g0,%l0,%o3
+/* 0x0218	     */		call	printf	! params =  %o0 %o1 %o2 %o3 %o4	! Result = 
+/* 0x021c	     */		or	%g0,%i2,%o4
+
+!   82		      !  /*printf("Tamaño de float: %d\n", sizeof(float)); */
+!   83		      !  printf("Ejecutando gauss v1.3.\n\n");
+
+/* 0x0220	  83 */		call	printf	! params =  %o0	! Result = 
+/* 0x0224	     */		add	%i4,-400,%o0
+
+!   84		      !    
+!   85		      !   /* Inicio del cálculo del tiempo de ejecución de todos los bucles */ 
+!   86		      !  times(&time_info);	/* man -s2 times */
+
+/* 0x0228	  86 */		call	times	! params =  %o0	! Result = 
+/* 0x022c	     */		add	%fp,-16,%o0
+
+!   87		      !  tinicio = time_info.tms_utime;
+
+/* 0x0230	  87 */		ld	[%fp-16],%g5
+
+!   89		      !  /* Ejecuta el experimento "repeat" veces */
+!   90		      !  for (r = 0; r < repeat; r++)
+
+/* 0x0234	  90 */		cmp	%i2,0
+/* 0x0238	     */		ld	[%sp+180],%f14
+/* 0x023c	  87 */		st	%g5,[%sp+164]
+/* 0x0240	  90 */		ble,pn	%icc,.L77000163
+/* 0x0244	     */		ld	[%sp+160],%i3
+
+! Registers live out of .L77000121: 
+! o0 sp l0 l1 l4 l5 i0 i1 i3 i4 i5 fp i7 gsr 
+! f14 
+		                       
+! predecessor blocks: .L77000121
+
+			.L77000192:
+/* 0x0248	  90 */		cmp	%g0,%l1
+/* 0x024c	     */		add	%l0,-1,%l4
+/* 0x0250	     */		or	%g0,1,%l3
+/* 0x0254	     */		add	%i3,-1,%i2
+/* 0x0258	     */		or	%g0,0,%i3
+/* 0x025c	     */		bl,pn	%icc,.L900000141
+/* 0x0260	     */		sethi	%hi(0x8000),%l5
+
+! Registers live out of .L77000192: 
+! o0 sp l0 l4 l5 i0 i1 i2 i3 i4 i5 fp i7 gsr 
+! f14 
+		                       
+! predecessor blocks: .L77000192
+
+			.L900000140:
+/* 0x0264	  90 */		or	%g0,%g0,%l3
+
+! Registers live out of .L900000140: 
+! o0 sp l0 l4 l5 i0 i1 i2 i3 i4 i5 fp i7 gsr 
+! f14 
+		                       
+! predecessor blocks: .L77000192 .L900000140
+
+			.L900000141:
+/* 0x0268	  90 */		sethi	%hi(B),%o1
+/* 0x026c	     */		sethi	%hi(P),%g5
+
+!   91		      !  {
+!   92		      !    /* Ponemos en marcha el cronometro */
+!   93		      !    etime0 = times(&time_info);
+
+/* 0x0270	  93 */		st	%f14,[%sp+180]
+/* 0x0274	  90 */		sethi	%hi(A),%g1
+/* 0x0278	     */		add	%l5,64,%l6
+/* 0x027c	     */		add	%o1,%lo(B),%l5
+/* 0x0280	     */		add	%g5,%lo(P),%l2
+/* 0x0284	     */		add	%g1,%lo(A),%l1
+
+! Registers live out of .L900000141: 
+! o0 sp l0 l1 l2 l4 l5 l6 i0 i1 i2 i3 i4 i5 fp i7 gsr 
+! 
+		                       
+! predecessor blocks: .L900000141 .L900000147
+
+			.L900000146:
+/* 0x0288	  93 */		call	times	! params =  %o0	! Result =  %o0
+/* 0x028c	     */		add	%fp,-16,%o0
+
+!   94		      !    //user0 = time_info.tms_utime + time_info.tms_stime;
+!   95		      !    user0 = time_info.tms_utime;
+
+/* 0x0290	  95 */		ld	[%fp-16],%l7
+
+!   97		      !    for (s = 0; s < limit; s++)
+
+/* 0x0294	  97 */		cmp	%l0,0
+/* 0x0298	     */		ld	[%sp+180],%f14
+/* 0x029c	     */		ble,pn	%icc,.L77000149
+/* 0x02a0	  93 */		or	%g0,%o0,%i0
+
+! Registers live out of .L900000146: 
+! o0 o2 sp l0 l1 l2 l4 l5 l6 l7 i0 i1 i2 i3 i4 i5 fp i7 gsr 
+! f14 
+		                       
+! predecessor blocks: .L900000146
+
+			.L77000191:
+/* 0x02a4	  97 */		ldd	[%i5-16],%f40
+
+!   98		      !    {
+!   99		      !      /* Impide optimizaciones agresivas del compilador */
+!  100		      !      A[0][0] = 0.0;
+
+/* 0x02a8	 100 */		sethi	%hi(A),%g1
+/* 0x02ac	  97 */		or	%g0,0,%o5
+/* 0x02b0	 100 */		add	%g1,%lo(A),%o4
+/* 0x02b4	     */		std	%f40,[%o4]
+
+! Registers live out of .L77000191: 
+! o0 o2 o4 o5 sp l0 l1 l2 l4 l5 l6 l7 i0 i1 i2 i3 i4 i5 fp i7 gsr 
+! f8 f14 
+		
+!  102		      !      /* Estos dos bucles anidados son que queremos medir: L/U  */
+!  103		      !      for (i = 0; i < m_size; i++)
+
+                       
+! predecessor blocks: .L77000145 .L77000191
+
+			.L900000149:
+/* 0x02b8	 103 */		cmp	%l3,0
+/* 0x02bc	     */		be,pn	%icc,.L77000145
+/* 0x02c0	     */		or	%g0,0,%o2
+
+! Registers live out of .L900000149: 
+! o0 o2 o4 o5 sp l0 l1 l2 l4 l5 l6 l7 i0 i1 i2 i3 i4 i5 fp i7 gsr 
+! f8 f14 
+		                       
+! predecessor blocks: .L900000149
+
+			.L77000189:
+/* 0x02c4	 103 */		or	%g0,%l2,%o1
+/* 0x02c8	     */		or	%g0,%l1,%g5
+
+!  104		      !      {
+!  105		      !	for (j = 0; j < m_size; j++)
+
+/* 0x02cc	 105 */		or	%g0,0,%o0
+
+! Registers live out of .L77000189: 
+! g5 o0 o1 o2 o4 o5 sp l0 l1 l2 l4 l5 l6 l7 i0 i1 i2 i3 i4 i5 fp i7 gsr 
+! f8 f14 
+		
+!  106		      !	   A[i][j] = A[i][j] - P[i]*B[j];
+
+                       
+! predecessor blocks: .L77000141 .L77000189
+
+			.L900000150:
+/* 0x02d0	 106 */		add	%i1,1,%g2
+/* 0x02d4	 105 */		or	%g0,%l5,%g3
+/* 0x02d8	     */		ldd	[%o1],%f48
+/* 0x02dc	     */		or	%g0,%g5,%g4
+/* 0x02e0	 106 */		cmp	%g2,8
+/* 0x02e4	     */		bl,pn	%icc,.L77000137
+/* 0x02e8	     */		nop
+
+! Registers live out of .L900000150: 
+! g3 g4 g5 o0 o1 o2 o4 o5 sp l0 l1 l2 l4 l5 l6 l7 i0 i1 i2 i3 i4 i5 fp i7 gsr 
+! f8 f14 f16 
+		                       
+! predecessor blocks: .L900000150
+
+			.L900000134:
+/* 0x02ec	 106 */		ldd	[%g3],%f60
+/* 0x02f0	     */		sub	%i1,3,%o3
+/* 0x02f4	     */		ldd	[%g3+8],%f46
+/* 0x02f8	 105 */		add	%o0,4,%o0
+/* 0x02fc	 106 */		ldd	[%g4+16],%f58
+/* 0x0300	     */		ldd	[%g4+8],%f56
+/* 0x0304	     */		fmuld	%f48,%f60,%f38
+/* 0x0308	     */		ldd	[%g3+24],%f32
+/* 0x030c	     */		fmuld	%f48,%f46,%f42
+/* 0x0310	     */		ldd	[%g3+16],%f52
+/* 0x0314	 105 */		add	%g3,32,%g3
+/* 0x0318	 106 */		ldd	[%g4],%f54
+/* 0x031c	 105 */		add	%g4,24,%g4
+
+! Registers live out of .L900000134: 
+! g3 g4 g5 o0 o1 o2 o3 o4 o5 sp l0 l1 l2 l4 l5 l6 l7 i0 i1 i2 i3 i4 i5 fp i7 gsr y
+! f0 f6 f8 f10 f14 f16 f20 f22 f24 f26 
+		                       
+! predecessor blocks: .L900000132 .L900000134
+
+			.L900000132:
+/* 0x0320	 106 */		prefetch	[%g3+144],0
+/* 0x0324	     */		prefetch	[%g4+144],0
+/* 0x0328	 105 */		add	%o0,4,%o0
+/* 0x032c	     */		add	%g4,32,%g4
+/* 0x0330	 106 */		ldd	[%g3],%f36
+/* 0x0334	     */		fsubd	%f54,%f38,%f62
+/* 0x0338	 105 */		cmp	%o0,%o3
+/* 0x033c	     */		add	%g3,32,%g3
+/* 0x0340	 106 */		ldd	[%g4-32],%f44
+/* 0x0344	     */		std	%f62,[%g4-56]
+/* 0x0348	     */		fmuld	%f48,%f52,%f50
+/* 0x034c	     */		fsubd	%f56,%f42,%f38
+/* 0x0350	     */		ldd	[%g3-24],%f42
+/* 0x0354	     */		ldd	[%g4-24],%f54
+/* 0x0358	     */		std	%f38,[%g4-48]
+/* 0x035c	     */		fmuld	%f48,%f32,%f32
+/* 0x0360	     */		fsubd	%f58,%f50,%f34
+/* 0x0364	     */		ldd	[%g3-16],%f52
+/* 0x0368	     */		ldd	[%g4-16],%f56
+/* 0x036c	     */		std	%f34,[%g4-40]
+/* 0x0370	     */		fmuld	%f48,%f36,%f38
+/* 0x0374	     */		fsubd	%f44,%f32,%f60
+/* 0x0378	     */		ldd	[%g3-8],%f32
+/* 0x037c	     */		ldd	[%g4-8],%f58
+/* 0x0380	     */		std	%f60,[%g4-32]
+/* 0x0384	 105 */		ble,pt	%icc,.L900000132
+/* 0x0388	 106 */		fmuld	%f48,%f42,%f42
+
+! Registers live out of .L900000132: 
+! g3 g4 g5 o0 o1 o2 o3 o4 o5 sp l0 l1 l2 l4 l5 l6 l7 i0 i1 i2 i3 i4 i5 fp i7 gsr y
+! f0 f6 f8 f10 f14 f16 f20 f22 f24 f26 
+		                       
+! predecessor blocks: .L900000132
+
+			.L900000135:
+/* 0x038c	 106 */		fmuld	%f48,%f52,%f36
+/* 0x0390	     */		ldd	[%g4],%f44
+/* 0x0394	     */		fsubd	%f54,%f38,%f50
+/* 0x0398	     */		fmuld	%f48,%f32,%f52
+/* 0x039c	     */		fsubd	%f56,%f42,%f34
+/* 0x03a0	 105 */		cmp	%o0,%i1
+/* 0x03a4	     */		add	%g4,8,%g4
+/* 0x03a8	 106 */		std	%f50,[%g4-32]
+/* 0x03ac	     */		std	%f34,[%g4-24]
+/* 0x03b0	     */		fsubd	%f58,%f36,%f54
+/* 0x03b4	     */		fsubd	%f44,%f52,%f42
+/* 0x03b8	     */		std	%f54,[%g4-16]
+/* 0x03bc	     */		std	%f42,[%g4-8]
+/* 0x03c0	 105 */		bg,pn	%icc,.L77000141
+/* 0x03c4	 106 */		nop
+
+! Registers live out of .L900000135: 
+! g3 g4 g5 o0 o1 o2 o4 o5 sp l0 l1 l2 l4 l5 l6 l7 i0 i1 i2 i3 i4 i5 fp i7 gsr 
+! f8 f14 f16 
+		                       
+! predecessor blocks: .L900000135 .L900000150
+
+			.L77000137:
+/* 0x03c8	 106 */		ldd	[%g3],%f54
+
+! Registers live out of .L77000137: 
+! g3 g4 g5 o0 o1 o2 o4 o5 sp l0 l1 l2 l4 l5 l6 l7 i0 i1 i2 i3 i4 i5 fp i7 gsr 
+! f8 f14 f16 f22 
+		                       
+! predecessor blocks: .L77000137 .L900000151
+
+			.L900000151:
+/* 0x03cc	 106 */		fmuld	%f48,%f54,%f52
+/* 0x03d0	     */		ldd	[%g4],%f46
+/* 0x03d4	 105 */		add	%o0,1,%o0
+/* 0x03d8	     */		cmp	%o0,%i1
+/* 0x03dc	     */		add	%g3,8,%g3
+/* 0x03e0	 106 */		fsubd	%f46,%f52,%f62
+/* 0x03e4	     */		std	%f62,[%g4]
+/* 0x03e8	 105 */		add	%g4,8,%g4
+/* 0x03ec	     */		ble,a,pt	%icc,.L900000151
+/* 0x03f0	 106 */		ldd	[%g3],%f54
+
+! Registers live out of .L900000151: 
+! g3 g4 g5 o0 o1 o2 o4 o5 sp l0 l1 l2 l4 l5 l6 l7 i0 i1 i2 i3 i4 i5 fp i7 gsr 
+! f8 f14 f16 f22 
+		                       
+! predecessor blocks: .L900000135 .L900000151
+
+			.L77000141:
+/* 0x03f4	 103 */		add	%o2,1,%o2
+/* 0x03f8	     */		add	%o1,8,%o1
+/* 0x03fc	     */		add	%g5,%l6,%g5
+/* 0x0400	     */		cmp	%o2,%i1
+/* 0x0404	     */		ble,pt	%icc,.L900000150
+/* 0x0408	 105 */		or	%g0,0,%o0
+
+! Registers live out of .L77000141: 
+! g5 o0 o1 o2 o4 o5 sp l0 l1 l2 l4 l5 l6 l7 i0 i1 i2 i3 i4 i5 fp i7 gsr 
+! f8 f14 
+		                       
+! predecessor blocks: .L77000141 .L900000149
+
+			.L77000145:
+/* 0x040c	  97 */		add	%o5,1,%o5
+/* 0x0410	     */		cmp	%o5,%l4
+/* 0x0414	     */		ble,a,pt	%icc,.L900000149
+/* 0x0418	 100 */		std	%f40,[%o4]
+
+! Registers live out of .L77000145: 
+! o0 o2 o4 o5 sp l0 l1 l2 l4 l5 l6 l7 i0 i1 i2 i3 i4 i5 fp i7 gsr 
+! f8 f14 
+		
+!  107		      !      } /* Fin L/U */
+!  108		      !    } /* Fin s */
+!  110		      !    //sleep(1);
+!  112		      !    /* Paramos el cronometro */
+!  113		      !    etime1 = times(&time_info);
+
+                       
+! predecessor blocks: .L77000145 .L900000146
+
+			.L77000149:
+/* 0x041c	 113 */		st	%f14,[%sp+180]
+/* 0x0420	     */		call	times	! params =  %o0	! Result =  %o0
+/* 0x0424	     */		add	%fp,-16,%o0
+
+!  114		      !    //user1 = time_info.tms_utime + time_info.tms_stime;
+!  115		      !    user1 = time_info.tms_utime;
+!  117		      !    sample_cpu = user1 - user0;
+
+/* 0x0428	 117 */		ld	[%fp-16],%o3
+
+!  118		      !    sample_elapsed = etime1 - etime0;
+!  120		      !    printf("*** Test %02d = %8.3f usg (%8.3f)\n", r+1,
+!  121		      !			sample_cpu*timer_resolution/limit,
+!  122		      !			sample_elapsed*timer_resolution/limit);
+
+/* 0x042c	 122 */		sub	%o0,%i0,%g3
+/* 0x0430	     */		add	%i3,1,%o1
+/* 0x0434	     */		st	%g3,[%sp+188]
+/* 0x0438	     */		add	%i4,-372,%o0
+/* 0x043c	 117 */		sub	%o3,%l7,%l7
+/* 0x0440	 122 */		st	%l7,[%sp+192]
+/* 0x0444	     */		st	%l0,[%sp+196]
+/* 0x0448	     */		ld	[%sp+188],%f31
+/* 0x044c	     */		ld	[%sp+192],%f17
+/* 0x0450	     */		ld	[%sp+180],%f14
+/* 0x0454	     */		fitos	%f31,%f6
+/* 0x0458	     */		ld	[%sp+196],%f29
+/* 0x045c	     */		fitos	%f17,%f18
+/* 0x0460	     */		fitos	%f29,%f21
+/* 0x0464	     */		fmuls	%f6,%f14,%f12
+/* 0x0468	     */		fmuls	%f18,%f14,%f20
+/* 0x046c	     */		fdivs	%f12,%f21,%f16
+/* 0x0470	     */		fdivs	%f20,%f21,%f8
+/* 0x0474	     */		fstod	%f16,%f22
+/* 0x0478	     */		st	%f22,[%sp+144]
+/* 0x047c	     */		st	%f23,[%sp+148]
+/* 0x0480	     */		ld	[%sp+144],%o4
+/* 0x0484	     */		ld	[%sp+148],%o5
+/* 0x0488	     */		fstod	%f8,%f24
+/* 0x048c	     */		st	%f24,[%sp+152]
+/* 0x0490	     */		st	%f25,[%sp+156]
+/* 0x0494	     */		ld	[%sp+152],%o2
+/* 0x0498	     */		call	printf	! params =  %o0 %o1 %o2 %o3 %o4 %o5	! Result = 
+/* 0x049c	     */		ld	[%sp+156],%o3
+
+!  124		      !    if (sample_cpu == 0)
+
+/* 0x04a0	 124 */		cmp	%l7,0
+/* 0x04a4	     */		ld	[%sp+180],%f14
+/* 0x04a8	     */		bne,pn	%icc,.L900000148
+/* 0x04ac	 126 */		cmp	%l7,20
+
+! Registers live out of .L77000149: 
+! o0 o2 sp l0 l1 l2 l4 l5 l6 l7 i0 i1 i2 i3 i4 i5 fp i7 gsr 
+! f14 f26 
+		
+!  125		      !      printf("AVISO: tiempo de ejecución menor que la resolución del reloj\n");
+
+                       
+! predecessor blocks: .L77000149
+
+			.L77000151:
+/* 0x04b0	 125 */		st	%f14,[%sp+180]
+/* 0x04b4	     */		call	printf	! params =  %o0	! Result = 
+/* 0x04b8	     */		add	%i4,-336,%o0
+/* 0x04bc	     */		ld	[%sp+180],%f14
+/* 0x04c0	     */		ba	.L900000147
+/* 0x04c4	 129 */		ld	[%sp+120],%o7
+
+! Registers live out of .L77000151: 
+! o0 sp o7 l0 l1 l2 l4 l5 l6 l7 i0 i1 i2 i3 i4 i5 fp i7 gsr 
+! f14 
+		
+!  126		      !    else if (sample_cpu < 20)
+
+                       
+! predecessor blocks: .L77000149
+
+			.L900000148:
+/* 0x04c8	 126 */		bge,pn	%icc,.L77000159
+/* 0x04cc	 127 */		ldd	[%i5-8],%f58
+
+! Registers live out of .L900000148: 
+! o0 o2 sp l0 l1 l2 l4 l5 l6 l7 i0 i1 i2 i3 i4 i5 fp i7 gsr 
+! f14 f26 
+		
+!  127		      !    	printf("AVISO: tiempo de ejecución (%4.2f usg) menor que 20 ticks del reloj 
+!  127		      >(%4.2f usg)\n", sample_cpu*timer_resolution, 20.0*timer_resolution);
+
+                       
+! predecessor blocks: .L900000148
+
+			.L77000155:
+/* 0x04d0	 127 */		fstod	%f14,%f56
+/* 0x04d4	     */		st	%l7,[%sp+188]
+/* 0x04d8	     */		add	%i4,-272,%o0
+/* 0x04dc	     */		st	%f14,[%sp+180]
+/* 0x04e0	     */		fmuld	%f56,%f58,%f2
+/* 0x04e4	     */		st	%f2,[%sp+128]
+/* 0x04e8	     */		ld	[%sp+188],%f19
+/* 0x04ec	     */		st	%f3,[%sp+132]
+/* 0x04f0	     */		fitos	%f19,%f23
+/* 0x04f4	     */		fmuls	%f23,%f14,%f25
+/* 0x04f8	     */		ld	[%sp+128],%o3
+/* 0x04fc	     */		fstod	%f25,%f4
+/* 0x0500	     */		st	%f4,[%sp+136]
+/* 0x0504	     */		st	%f5,[%sp+140]
+/* 0x0508	     */		ld	[%sp+132],%o4
+/* 0x050c	     */		ld	[%sp+136],%o1
+/* 0x0510	     */		call	printf	! params =  %o0 %o1 %o2 %o3 %o4	! Result = 
+/* 0x0514	     */		ld	[%sp+140],%o2
+/* 0x0518	     */		ld	[%sp+180],%f14
+
+! Registers live out of .L77000155: 
+! o0 sp l0 l1 l2 l4 l5 l6 l7 i0 i1 i2 i3 i4 i5 fp i7 gsr 
+! f14 
+		
+!  128		      !    	
+!  129		      !    total += sample_cpu;
+
+                       
+! predecessor blocks: .L77000155 .L900000148
+
+			.L77000159:
+/* 0x051c	 129 */		ld	[%sp+120],%o7
+
+! Registers live out of .L77000159: 
+! o0 sp o7 l0 l1 l2 l4 l5 l6 l7 i0 i1 i2 i3 i4 i5 fp i7 gsr 
+! f14 
+		                       
+! predecessor blocks: .L77000151 .L77000159
+
+			.L900000147:
+/* 0x0520	 129 */		add	%o7,%l7,%o4
+/* 0x0524	     */		st	%o4,[%sp+120]
+/* 0x0528	  90 */		add	%i3,1,%i3
+
+!  130		      !    total_sqrd += (sample_cpu * sample_cpu);
+
+/* 0x052c	 130 */		sra	%l7,0,%o5
+/* 0x0530	  90 */		cmp	%i3,%i2
+/* 0x0534	 130 */		mulx	%o5,%o5,%o7
+/* 0x0538	     */		ld	[%sp+124],%o3
+/* 0x053c	     */		add	%o3,%o7,%o2
+/* 0x0540	     */		st	%o2,[%sp+124]
+/* 0x0544	  90 */		ble,a,pt	%icc,.L900000146
+/* 0x0548	  93 */		st	%f14,[%sp+180]
+
+! Registers live out of .L900000147: 
+! o0 sp l0 l1 l2 l4 l5 l6 i0 i1 i2 i3 i4 i5 fp i7 gsr 
+! f14 
+		
+!  131		      !  } /* fin repeat */
+!  133		      !  /* Cálculo del tiempo de ejecución de todos los bucles */
+!  134		      !  times(&time_info);
+
+                       
+! predecessor blocks: .L77000121 .L900000147
+
+			.L77000163:
+/* 0x054c	 134 */		st	%f14,[%sp+180]
+/* 0x0550	     */		call	times	! params =  %o0	! Result = 
+/* 0x0554	     */		add	%fp,-16,%o0
+
+!  135		      !  tfinal = time_info.tms_utime;
+!  136		      !  //tfinal = time_info.tms_utime + time_info.tms_stime;
+!  137		      !  ttotal = tfinal - tinicio;
+!  138		      !  
+!  139		      !  /* Cálculo de la varianza y desviación estándar
+!  140		      !   * de las medidas obtenidas por el bucle repeat */
+!  141		      !  /* VAR[X] = E[X^2] - E[X]^2 */
+!  142		      !  /* STD[X] = sqrt(VAR[X]) */
+!  143		      !  loop_mean = (float) total / repeat;
+
+/* 0x0558	 143 */		ld	[%sp+120],%f30
+/* 0x055c	     */		ld	[%sp+160],%f28
+
+!  144		      !  loop_var = ((float) total_sqrd / repeat) - (loop_mean * loop_mean);
+!  145		      !  loop_std_ratio_c = loop_var / (loop_mean*loop_mean);
+!  146		      !  if (loop_std_ratio_c > 0.0025)
+
+/* 0x0560	 146 */		ld	[%sp+124],%f1
+/* 0x0564	 143 */		fitos	%f30,%f10
+/* 0x0568	 146 */		ldd	[%i5],%f48
+/* 0x056c	 143 */		fitos	%f28,%f5
+/* 0x0570	 137 */		ld	[%fp-16],%i1
+/* 0x0574	 146 */		fitos	%f1,%f3
+/* 0x0578	 137 */		ld	[%sp+164],%i0
+/* 0x057c	 146 */		ld	[%sp+180],%f14
+/* 0x0580	 143 */		fdivs	%f10,%f5,%f0
+/* 0x0584	 146 */		fdivs	%f3,%f5,%f7
+/* 0x0588	     */		fmuls	%f0,%f0,%f9
+/* 0x058c	     */		fsubs	%f7,%f9,%f13
+/* 0x0590	     */		fdivs	%f13,%f9,%f11
+/* 0x0594	     */		fstod	%f11,%f40
+/* 0x0598	     */		fcmped	%fcc0,%f40,%f48
+/* 0x059c	     */		fbule,pn	%fcc0,.L77000167
+/* 0x05a0	 137 */		sub	%i1,%i0,%l4
+
+! Registers live out of .L77000163: 
+! o0 sp l0 l4 i0 i4 fp i7 gsr 
+! f0 f14 
+		
+!  147		      !	printf("AVISO: Varianza de las mediciones demasiado alta\n");
+
+                       
+! predecessor blocks: .L77000163
+
+			.L77000165:
+/* 0x05a4	 147 */		st	%f14,[%sp+180]
+/* 0x05a8	     */		st	%f0,[%sp+184]
+/* 0x05ac	     */		call	printf	! params =  %o0	! Result = 
+/* 0x05b0	     */		add	%i4,-188,%o0
+/* 0x05b4	     */		ld	[%sp+180],%f14
+/* 0x05b8	     */		ld	[%sp+184],%f0
+/* 0x05bc	     */		ba	.L900000145
+/* 0x05c0	 149 */		st	%l0,[%sp+196]
+
+! Registers live out of .L77000165: 
+! o0 sp l4 i0 i4 fp i7 gsr 
+! f0 f14 
+		                       
+! predecessor blocks: main
+
+			.L900000155:
+/* 0x05c4	  43 */		sethi	%hi(.L18),%l1
+/* 0x05c8	     */		call	printf	! params =  %o0 %o1	! Result = 
+/* 0x05cc	     */		add	%l1,%lo(.L18),%o0
+/* 0x05d0	  44 */		call	exit	! params =  %o0	! Result = 
+/* 0x05d4	     */		or	%g0,-1,%o0
+/* 0x05d8	     */		ba	.L900000144
+/* 0x05dc	  47 */		ld	[%i1+4],%o0
+
+! Registers live out of .L900000155: 
+! o0 sp l0 l4 l5 i0 i1 i3 i4 i5 fp i7 gsr 
+! 
+		                       
+! predecessor blocks: .L900000144
+
+			.L900000154:
+/* 0x05e0	  49 */		sethi	%hi(0x1000),%o3
+/* 0x05e4	     */		add	%l0,%lo(__iob+32),%o0
+/* 0x05e8	     */		add	%i4,-676,%o1
+/* 0x05ec	     */		add	%o3,8,%o3
+/* 0x05f0	     */		call	fprintf	! params =  %o0 %o1 %o2 %o3	! Result = 
+/* 0x05f4	     */		or	%g0,%l1,%o2
+/* 0x05f8	  50 */		call	exit	! params =  %o0	! Result = 
+/* 0x05fc	     */		or	%g0,1,%o0
+/* 0x0600	     */		ba	.L900000143
+/* 0x0604	  53 */		ld	[%i1+8],%o0
+
+! Registers live out of .L900000154: 
+! o0 sp l1 l4 l5 i0 i1 i3 i4 i5 fp i7 gsr 
+! 
+		                       
+! predecessor blocks: .L77000099 .L900000143
+
+			.L77000103:
+/* 0x0608	  56 */		sethi	%hi(__iob+32),%i3
+/* 0x060c	     */		sethi	%hi(.L26),%g2
+/* 0x0610	     */		add	%i3,%lo(__iob+32),%o0
+/* 0x0614	     */		call	fprintf	! params =  %o0 %o1	! Result = 
+/* 0x0618	     */		add	%g2,%lo(.L26),%o1
+/* 0x061c	  57 */		call	exit	! params =  %o0	! Result = 
+/* 0x0620	     */		or	%g0,1,%o0
+/* 0x0624	     */		ba	.L900000142
+/* 0x0628	  61 */		add	%l1,-1,%i1
+
+! Registers live out of .L77000103: 
+! o0 sp l0 l1 l4 l5 i0 i1 i3 i4 i5 fp i7 gsr 
+! 
+		
+!  149		      !  test_mean = loop_mean / limit;
+
+                       
+! predecessor blocks: .L77000163
+
+			.L77000167:
+/* 0x062c	 149 */		st	%l0,[%sp+196]
+
+! Registers live out of .L77000167: 
+! o0 sp l4 i0 i4 fp i7 gsr 
+! f0 f14 
+		                       
+! predecessor blocks: .L77000165 .L77000167
+
+			.L900000145:
+/* 0x0630	 149 */		ld	[%sp+196],%f2
+
+!  150		      !  printf("\n******** Resultados ********\n");
+
+/* 0x0634	 150 */		st	%f14,[%sp+180]
+/* 0x0638	     */		st	%f0,[%sp+184]
+/* 0x063c	 149 */		fitos	%f2,%f4
+/* 0x0640	     */		fdivs	%f0,%f4,%f6
+/* 0x0644	 150 */		st	%f6,[%sp+188]
+/* 0x0648	     */		call	printf	! params =  %o0	! Result = 
+/* 0x064c	     */		add	%i4,-136,%o0
+
+!  151		      !  printf("Tiempo medio de ejecución de L/U    = %8.3f usg\n", test_mean*timer_res
+!  151		      >olution);
+
+/* 0x0650	 151 */		ld	[%sp+180],%f14
+/* 0x0654	     */		add	%i4,-104,%o0
+/* 0x0658	     */		ld	[%sp+188],%f6
+/* 0x065c	     */		fmuls	%f6,%f14,%f12
+/* 0x0660	     */		fstod	%f12,%f16
+/* 0x0664	     */		st	%f16,[%sp+112]
+/* 0x0668	     */		st	%f17,[%sp+116]
+/* 0x066c	     */		ld	[%sp+112],%o1
+/* 0x0670	     */		call	printf	! params =  %o0 %o1 %o2	! Result = 
+/* 0x0674	     */		ld	[%sp+116],%o2
+
+!  152		      !  printf("Tiempo medio de ejecución de limit  = %8.0f usg\n", loop_mean*timer_res
+!  152		      >olution);
+
+/* 0x0678	 152 */		ld	[%sp+184],%f0
+/* 0x067c	     */		add	%i4,-52,%o0
+/* 0x0680	     */		ld	[%sp+180],%f14
+/* 0x0684	     */		fmuls	%f0,%f14,%f18
+/* 0x0688	     */		fstod	%f18,%f20
+/* 0x068c	     */		st	%f20,[%sp+96]
+/* 0x0690	     */		st	%f21,[%sp+100]
+/* 0x0694	     */		ld	[%sp+96],%o1
+/* 0x0698	     */		call	printf	! params =  %o0 %o1 %o2	! Result = 
+/* 0x069c	     */		ld	[%sp+100],%o2
+
+!  153		      !  printf("Tiempo total de ejecución de repeat = %8.0f usg\n\n", ttotal*timer_reso
+!  153		      >lution);
+
+/* 0x06a0	 153 */		st	%l4,[%sp+192]
+/* 0x06a4	     */		ld	[%sp+192],%f8
+/* 0x06a8	     */		ld	[%sp+180],%f14
+/* 0x06ac	     */		fitos	%f8,%f22
+/* 0x06b0	     */		fmuls	%f22,%f14,%f24
+/* 0x06b4	     */		fstod	%f24,%f26
+/* 0x06b8	     */		st	%f26,[%sp+104]
+/* 0x06bc	     */		st	%f27,[%sp+108]
+/* 0x06c0	     */		ld	[%sp+104],%o1
+/* 0x06c4	     */		ld	[%sp+108],%o2
+/* 0x06c8	     */		call	printf	! params =  %o0 %o1 %o2	! Result = 
+/* 0x06cc	     */		or	%g0,%i4,%o0
+
+!  154		      !  
+!  155		      !  exit(0);
+
+/* 0x06d0	 155 */		call	exit	! params =  %o0	! Result = 
+/* 0x06d4	     */		or	%g0,0,%o0
+/* 0x06d8	 156 */		ret	! Result =  %i0
+/* 0x06dc	     */		restore	%g0,0,%o0
+/* 0x06e0	   0 */		.type	main,2
+/* 0x06e0	   0 */		.size	main,(.-main)
+/* 0x06e0	   0 */		.global	__fsr_init_value
+/* 0x06e0	     */		 __fsr_init_value=0
+
+! Begin Disassembling Debug Info
+!  Begin sdCreateSection : .debug_loc
+!  Section Info: link_name/strtab=, entsize=0x1, adralign=0x1, flags=0x0
+!  Section Data Blocks:
+	.section ".debug_loc"
+!  End sdCreateSection
+!  Begin sdCreateSection : .debug_info
+!  Section Info: link_name/strtab=, entsize=0x1, adralign=0x1, flags=0x0
+!  Section Data Blocks:
+!   reloc[0]: knd=2, off=6, siz=4, lab1=.debug_abbrev, lab2=, loff=0
+!   reloc[1]: knd=2, off=174, siz=4, lab1=.debug_line, lab2=, loff=0
+	.section ".debug_info"
+	.byte 0x00,0x00,0x00,0xb0,0x00,0x02
+	.uaword %section_symbol(".debug_abbrev")
+	.byte 0x04,0x01
+	.ascii "gauss.c\0"
+	.byte 0x0c
+	.ascii "/home/a605731/practicas/DARQ/practica4\0"
+	.ascii " /opt/SUNWspro/prod/bin/cc -xO3 -S  gauss.c\0"
+	.ascii "Xa;O;R=Sun C 5.9 SunOS_sparc 2007/05/03;backend;raw;cd;\0"
+	.ascii "DBG_GEN 5.2.1\0"
+	.uaword %section_symbol(".debug_line")
+	.byte 0x00,0x00
+!  End sdCreateSection
+!  Begin sdCreateSection : .debug_line
+!  Section Info: link_name/strtab=, entsize=0x1, adralign=0x1, flags=0x0
+!  Section Data Blocks:
+	.section ".debug_line"
+	.byte 0x00,0x00,0x00,0x48,0x00,0x02,0x00,0x00
+	.byte 0x00,0x42,0x04,0x00,0xff,0x04,0x0a,0x00
+	.byte 0x01,0x01,0x01,0x01,0x00,0x00,0x00,0x01
+	.byte 0x2f,0x68,0x6f,0x6d,0x65,0x2f,0x61,0x36
+	.byte 0x30,0x35,0x37,0x33,0x31,0x2f,0x70,0x72
+	.byte 0x61,0x63,0x74,0x69,0x63,0x61,0x73,0x2f
+	.byte 0x44,0x41,0x52,0x51,0x2f,0x70,0x72,0x61
+	.byte 0x63,0x74,0x69,0x63,0x61,0x34,0x00,0x00
+	.byte 0x67,0x61,0x75,0x73,0x73,0x2e,0x63,0x00
+	.byte 0x01,0x00,0x00,0x00
+!  End sdCreateSection
+!  Begin sdCreateSection : .debug_abbrev
+!  Section Info: link_name/strtab=, entsize=0x1, adralign=0x1, flags=0x0
+!  Section Data Blocks:
+	.section ".debug_abbrev"
+	.byte 0x01,0x11,0x00,0x03,0x08,0x13,0x0b,0x1b
+	.byte 0x08,0x85,0x44,0x08,0x87,0x44,0x08,0x25
+	.byte 0x08,0x10,0x06,0x00,0x00,0x00
+!  End sdCreateSection
+
+! End Disassembling Debug Info
+
+! Begin Disassembling Ident
+	.ident	"cg: Sun Compiler Common 12 SunOS_sparc 2007/05/03"	! (NO SOURCE LINE)
+	.ident	"cg: Sun Compiler Common 12 SunOS_sparc 2007/05/03"	! (NO SOURCE LINE)
+	.ident	"@(#)stdio.h\t1.84\t04/09/28 SMI"	! (/tmp/acompAAA.21043.TKaygP:8)
+	.ident	"@(#)feature_tests.h\t1.25\t07/02/02 SMI"	! (/tmp/acompAAA.21043.TKaygP:9)
+	.ident	"@(#)ccompile.h\t1.2\t04/11/08 SMI"	! (/tmp/acompAAA.21043.TKaygP:10)
+	.ident	"@(#)isa_defs.h\t1.29\t08/06/06 SMI"	! (/tmp/acompAAA.21043.TKaygP:11)
+	.ident	"@(#)stdio_iso.h\t1.8\t05/08/16 SMI"	! (/tmp/acompAAA.21043.TKaygP:12)
+	.ident	"@(#)va_list.h\t1.15\t04/11/19 SMI"	! (/tmp/acompAAA.21043.TKaygP:13)
+	.ident	"@(#)stdio_tag.h\t1.4\t04/09/28 SMI"	! (/tmp/acompAAA.21043.TKaygP:14)
+	.ident	"@(#)stdio_impl.h\t1.15\t07/03/05 SMI"	! (/tmp/acompAAA.21043.TKaygP:15)
+	.ident	"@(#)stdio_c99.h\t1.2\t04/03/29 SMI"	! (/tmp/acompAAA.21043.TKaygP:16)
+	.ident	"@(#)unistd.h\t1.76\t06/03/10 SMI"	! (/tmp/acompAAA.21043.TKaygP:17)
+	.ident	"@(#)types.h\t1.86\t07/09/20 SMI"	! (/tmp/acompAAA.21043.TKaygP:18)
+	.ident	"@(#)machtypes.h\t1.13\t99/05/04 SMI"	! (/tmp/acompAAA.21043.TKaygP:19)
+	.ident	"@(#)int_types.h\t1.10\t04/09/28 SMI"	! (/tmp/acompAAA.21043.TKaygP:20)
+	.ident	"@(#)select.h\t1.19\t04/01/28 SMI"	! (/tmp/acompAAA.21043.TKaygP:21)
+	.ident	"@(#)time_impl.h\t1.11\t05/05/19 SMI"	! (/tmp/acompAAA.21043.TKaygP:22)
+	.ident	"@(#)time.h\t2.77\t09/06/02 SMI"	! (/tmp/acompAAA.21043.TKaygP:23)
+	.ident	"@(#)time.h\t1.45\t08/01/09 SMI"	! (/tmp/acompAAA.21043.TKaygP:24)
+	.ident	"@(#)time_iso.h\t1.4\t04/09/07 SMI"	! (/tmp/acompAAA.21043.TKaygP:25)
+	.ident	"@(#)unistd.h\t1.43\t06/03/10 SMI"	! (/tmp/acompAAA.21043.TKaygP:26)
+	.ident	"@(#)stdlib.h\t1.51\t04/06/30 SMI"	! (/tmp/acompAAA.21043.TKaygP:27)
+	.ident	"@(#)stdlib_iso.h\t1.9\t04/09/28 SMI"	! (/tmp/acompAAA.21043.TKaygP:28)
+	.ident	"@(#)stdlib_c99.h\t1.2\t04/03/29 SMI"	! (/tmp/acompAAA.21043.TKaygP:29)
+	.ident	"@(#)times.h\t1.10\t97/08/12 SMI"	! (/tmp/acompAAA.21043.TKaygP:30)
+	.ident	"@(#)limits.h\t1.59\t04/08/24 SMI"	! (/tmp/acompAAA.21043.TKaygP:31)
+	.ident	"@(#)limits_iso.h\t1.2\t03/12/04 SMI"	! (/tmp/acompAAA.21043.TKaygP:32)
+	.ident	"@(#)int_limits.h\t1.9\t04/09/28 SMI"	! (/tmp/acompAAA.21043.TKaygP:33)
+	.ident	"@(#)math.h\t2.24\t04/10/23 SMI"	! (/tmp/acompAAA.21043.TKaygP:34)
+	.ident	"@(#)math_iso.h\t1.9\t04/10/23 SMI"	! (/tmp/acompAAA.21043.TKaygP:35)
+	.ident	"@(#)math_c99.h\t1.9\t04/11/01 SMI"	! (/tmp/acompAAA.21043.TKaygP:36)
+	.ident	"@(#)floatingpoint.h\t2.9\t04/10/23 SMI"	! (/tmp/acompAAA.21043.TKaygP:37)
+	.ident	"@(#)ieeefp.h\t2.12\t04/10/23 SMI"	! (/tmp/acompAAA.21043.TKaygP:38)
+	.ident	"acomp: Sun C 5.9 SunOS_sparc 2007/05/03"	! (/tmp/acompAAA.21043.TKaygP:85)
+	.ident	"iropt: Sun Compiler Common 12 SunOS_sparc 2007/05/03"	! (/tmp/acompAAA.21043.TKaygP:93)
+! End Disassembling Ident

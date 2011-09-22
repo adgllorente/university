@@ -1,0 +1,378 @@
+<students>
+	<student id="1" name="adrian" surname="gomez" matriculationID="0904327g" password="qwerty">
+		<courses>
+			<course id="1" name="Psychology">
+			</course>
+			<course id="2" name="maths">
+			</course>
+			<course id="3" name="Computing">
+			</course>
+		</courses>
+		<answers>
+		</answers>
+	</student>
+	<student id="2" name="jesus" surname="rodriguez" matriculationID="0504993r" password="hola">
+		<courses>
+			<course id="1" name="Psychology">
+				<questionaire id="2" name="matematica pura de culo" courseID="1" studentID="2">
+					<question id="1" content="hola que tal?" questionaireID="1,2,6">
+						<choice id="1" content="hola" questionID="1" correct="1">
+						</choice>
+						<choice id="2" content="adios" questionID="1" correct="0">
+						</choice>
+					</question>
+					<question id="2" content="" questionaireID="1">
+						<choice id="3" content="" questionID="2" correct="1">
+						</choice>
+					</question>
+					<question id="3" content="Pregunta 1" questionaireID="1,2,6">
+						<choice id="4" content="Respuesta 1" questionID="3" correct="1">
+						</choice>
+						<choice id="5" content="Respuesta 2" questionID="3" correct="0">
+						</choice>
+					</question>
+					<question id="4" content="Pregunta 200" questionaireID="1,2,6">
+						<choice id="6" content="Respuesta 200" questionID="4" correct="1">
+						</choice>
+						<choice id="7" content="Respuesta 2001" questionID="4" correct="0">
+						</choice>
+						<choice id="8" content="Respuesta 2002" questionID="4" correct="0">
+						</choice>
+						<choice id="9" content="Respuesta 2003" questionID="4" correct="0">
+						</choice>
+						<choice id="10" content="Respuesta 2004" questionID="4" correct="0">
+						</choice>
+					</question>
+					<question id="5" content="Whyy oh gooodd WHYYY???" questionaireID="6">
+						<choice id="11" content="because I say sooo" questionID="5" correct="1">
+						</choice>
+						<choice id="12" content="have a....." questionID="5" correct="0">
+						</choice>
+					</question>
+				</questionaire>
+			</course>
+			<course id="2" name="maths">
+			</course>
+			<course id="3" name="Computing">
+			</course>
+		</courses>
+		<answers>
+			<answer id="1" studentID="2" questionaireID="2" questionID="1" choiceID="1">
+			</answer>
+			<answer id="2" studentID="2" questionaireID="2" questionID="3" choiceID="4">
+			</answer>
+			<answer id="3" studentID="2" questionaireID="2" questionID="4" choiceID="7">
+			</answer>
+			<answer id="7" studentID="2" questionaireID="1" questionID="1" choiceID="1">
+			</answer>
+			<answer id="8" studentID="2" questionaireID="1" questionID="2" choiceID="3">
+			</answer>
+			<answer id="9" studentID="2" questionaireID="1" questionID="3" choiceID="4">
+			</answer>
+			<answer id="10" studentID="2" questionaireID="1" questionID="4" choiceID="8">
+			</answer>
+		</answers>
+	</student>
+	<student id="3" name="Victor" surname="Catalan" matriculationID="123" password="qwerty">
+		<courses>
+			<course id="1" name="Psychology">
+				<questionaire id="1" name="" courseID="1" studentID="3">
+					<question id="1" content="hola que tal?" questionaireID="1,2,6">
+						<choice id="1" content="hola" questionID="1" correct="1">
+						</choice>
+						<choice id="2" content="adios" questionID="1" correct="0">
+						</choice>
+					</question>
+					<question id="2" content="" questionaireID="1">
+						<choice id="3" content="" questionID="2" correct="1">
+						</choice>
+					</question>
+					<question id="3" content="Pregunta 1" questionaireID="1,2,6">
+						<choice id="4" content="Respuesta 1" questionID="3" correct="1">
+						</choice>
+						<choice id="5" content="Respuesta 2" questionID="3" correct="0">
+						</choice>
+					</question>
+					<question id="4" content="Pregunta 200" questionaireID="1,2,6">
+						<choice id="6" content="Respuesta 200" questionID="4" correct="1">
+						</choice>
+						<choice id="7" content="Respuesta 2001" questionID="4" correct="0">
+						</choice>
+						<choice id="8" content="Respuesta 2002" questionID="4" correct="0">
+						</choice>
+						<choice id="9" content="Respuesta 2003" questionID="4" correct="0">
+						</choice>
+						<choice id="10" content="Respuesta 2004" questionID="4" correct="0">
+						</choice>
+					</question>
+					<question id="5" content="Whyy oh gooodd WHYYY???" questionaireID="6">
+						<choice id="11" content="because I say sooo" questionID="5" correct="1">
+						</choice>
+						<choice id="12" content="have a....." questionID="5" correct="0">
+						</choice>
+					</question>
+				</questionaire>
+				<questionaire id="3" name="" courseID="1" studentID="3">
+					<question id="1" content="hola que tal?" questionaireID="1,2,6">
+						<choice id="1" content="hola" questionID="1" correct="1">
+						</choice>
+						<choice id="2" content="adios" questionID="1" correct="0">
+						</choice>
+					</question>
+					<question id="2" content="" questionaireID="1">
+						<choice id="3" content="" questionID="2" correct="1">
+						</choice>
+					</question>
+					<question id="3" content="Pregunta 1" questionaireID="1,2,6">
+						<choice id="4" content="Respuesta 1" questionID="3" correct="1">
+						</choice>
+						<choice id="5" content="Respuesta 2" questionID="3" correct="0">
+						</choice>
+					</question>
+					<question id="4" content="Pregunta 200" questionaireID="1,2,6">
+						<choice id="6" content="Respuesta 200" questionID="4" correct="1">
+						</choice>
+						<choice id="7" content="Respuesta 2001" questionID="4" correct="0">
+						</choice>
+						<choice id="8" content="Respuesta 2002" questionID="4" correct="0">
+						</choice>
+						<choice id="9" content="Respuesta 2003" questionID="4" correct="0">
+						</choice>
+						<choice id="10" content="Respuesta 2004" questionID="4" correct="0">
+						</choice>
+					</question>
+					<question id="5" content="Whyy oh gooodd WHYYY???" questionaireID="6">
+						<choice id="11" content="because I say sooo" questionID="5" correct="1">
+						</choice>
+						<choice id="12" content="have a....." questionID="5" correct="0">
+						</choice>
+					</question>
+				</questionaire>
+				<questionaire id="4" name="" courseID="1" studentID="3">
+					<question id="1" content="hola que tal?" questionaireID="1,2,6">
+						<choice id="1" content="hola" questionID="1" correct="1">
+						</choice>
+						<choice id="2" content="adios" questionID="1" correct="0">
+						</choice>
+					</question>
+					<question id="2" content="" questionaireID="1">
+						<choice id="3" content="" questionID="2" correct="1">
+						</choice>
+					</question>
+					<question id="3" content="Pregunta 1" questionaireID="1,2,6">
+						<choice id="4" content="Respuesta 1" questionID="3" correct="1">
+						</choice>
+						<choice id="5" content="Respuesta 2" questionID="3" correct="0">
+						</choice>
+					</question>
+					<question id="4" content="Pregunta 200" questionaireID="1,2,6">
+						<choice id="6" content="Respuesta 200" questionID="4" correct="1">
+						</choice>
+						<choice id="7" content="Respuesta 2001" questionID="4" correct="0">
+						</choice>
+						<choice id="8" content="Respuesta 2002" questionID="4" correct="0">
+						</choice>
+						<choice id="9" content="Respuesta 2003" questionID="4" correct="0">
+						</choice>
+						<choice id="10" content="Respuesta 2004" questionID="4" correct="0">
+						</choice>
+					</question>
+					<question id="5" content="Whyy oh gooodd WHYYY???" questionaireID="6">
+						<choice id="11" content="because I say sooo" questionID="5" correct="1">
+						</choice>
+						<choice id="12" content="have a....." questionID="5" correct="0">
+						</choice>
+					</question>
+				</questionaire>
+				<questionaire id="5" name="" courseID="1" studentID="3">
+					<question id="1" content="hola que tal?" questionaireID="1,2,6">
+						<choice id="1" content="hola" questionID="1" correct="1">
+						</choice>
+						<choice id="2" content="adios" questionID="1" correct="0">
+						</choice>
+					</question>
+					<question id="2" content="" questionaireID="1">
+						<choice id="3" content="" questionID="2" correct="1">
+						</choice>
+					</question>
+					<question id="3" content="Pregunta 1" questionaireID="1,2,6">
+						<choice id="4" content="Respuesta 1" questionID="3" correct="1">
+						</choice>
+						<choice id="5" content="Respuesta 2" questionID="3" correct="0">
+						</choice>
+					</question>
+					<question id="4" content="Pregunta 200" questionaireID="1,2,6">
+						<choice id="6" content="Respuesta 200" questionID="4" correct="1">
+						</choice>
+						<choice id="7" content="Respuesta 2001" questionID="4" correct="0">
+						</choice>
+						<choice id="8" content="Respuesta 2002" questionID="4" correct="0">
+						</choice>
+						<choice id="9" content="Respuesta 2003" questionID="4" correct="0">
+						</choice>
+						<choice id="10" content="Respuesta 2004" questionID="4" correct="0">
+						</choice>
+					</question>
+					<question id="5" content="Whyy oh gooodd WHYYY???" questionaireID="6">
+						<choice id="11" content="because I say sooo" questionID="5" correct="1">
+						</choice>
+						<choice id="12" content="have a....." questionID="5" correct="0">
+						</choice>
+					</question>
+				</questionaire>
+			</course>
+			<course id="2" name="maths">
+			</course>
+			<course id="3" name="Computing">
+			</course>
+		</courses>
+		<answers>
+			<answer id="4" studentID="3" questionaireID="2" questionID="1" choiceID="1">
+			</answer>
+			<answer id="5" studentID="3" questionaireID="2" questionID="3" choiceID="4">
+			</answer>
+			<answer id="6" studentID="3" questionaireID="2" questionID="4" choiceID="7">
+			</answer>
+		</answers>
+	</student>
+	<student id="4" name="Paul" surname="Holmes" matriculationID="111111" password="hola">
+		<courses>
+			<course id="1" name="Psychology">
+			</course>
+			<course id="2" name="maths">
+			</course>
+			<course id="3" name="Computing">
+				<questionaire id="6" name="WHy are we here questions V1.0" courseID="3" studentID="4">
+					<question id="1" content="hola que tal?" questionaireID="1,2,6">
+						<choice id="1" content="hola" questionID="1" correct="1">
+						</choice>
+						<choice id="2" content="adios" questionID="1" correct="0">
+						</choice>
+					</question>
+					<question id="2" content="" questionaireID="1">
+						<choice id="3" content="" questionID="2" correct="1">
+						</choice>
+					</question>
+					<question id="3" content="Pregunta 1" questionaireID="1,2,6">
+						<choice id="4" content="Respuesta 1" questionID="3" correct="1">
+						</choice>
+						<choice id="5" content="Respuesta 2" questionID="3" correct="0">
+						</choice>
+					</question>
+					<question id="4" content="Pregunta 200" questionaireID="1,2,6">
+						<choice id="6" content="Respuesta 200" questionID="4" correct="1">
+						</choice>
+						<choice id="7" content="Respuesta 2001" questionID="4" correct="0">
+						</choice>
+						<choice id="8" content="Respuesta 2002" questionID="4" correct="0">
+						</choice>
+						<choice id="9" content="Respuesta 2003" questionID="4" correct="0">
+						</choice>
+						<choice id="10" content="Respuesta 2004" questionID="4" correct="0">
+						</choice>
+					</question>
+					<question id="5" content="Whyy oh gooodd WHYYY???" questionaireID="6">
+						<choice id="11" content="because I say sooo" questionID="5" correct="1">
+						</choice>
+						<choice id="12" content="have a....." questionID="5" correct="0">
+						</choice>
+					</question>
+				</questionaire>
+			</course>
+		</courses>
+		<answers>
+			<answer id="11" studentID="4" questionaireID="6" questionID="1" choiceID="1">
+			</answer>
+			<answer id="12" studentID="4" questionaireID="6" questionID="3" choiceID="5">
+			</answer>
+			<answer id="13" studentID="4" questionaireID="6" questionID="4" choiceID="6">
+			</answer>
+			<answer id="14" studentID="4" questionaireID="6" questionID="5" choiceID="11">
+			</answer>
+		</answers>
+	</student>
+	<student id="5" name="y" surname="o" matriculationID="1" password="f">
+		<courses>
+			<course id="1" name="Psychology">
+				<questionaire id="7" name="" courseID="1" studentID="5">
+					<question id="1" content="hola que tal?" questionaireID="1,2,6">
+						<choice id="1" content="hola" questionID="1" correct="1">
+						</choice>
+						<choice id="2" content="adios" questionID="1" correct="0">
+						</choice>
+					</question>
+					<question id="2" content="" questionaireID="1">
+						<choice id="3" content="" questionID="2" correct="1">
+						</choice>
+					</question>
+					<question id="3" content="Pregunta 1" questionaireID="1,2,6">
+						<choice id="4" content="Respuesta 1" questionID="3" correct="1">
+						</choice>
+						<choice id="5" content="Respuesta 2" questionID="3" correct="0">
+						</choice>
+					</question>
+					<question id="4" content="Pregunta 200" questionaireID="1,2,6">
+						<choice id="6" content="Respuesta 200" questionID="4" correct="1">
+						</choice>
+						<choice id="7" content="Respuesta 2001" questionID="4" correct="0">
+						</choice>
+						<choice id="8" content="Respuesta 2002" questionID="4" correct="0">
+						</choice>
+						<choice id="9" content="Respuesta 2003" questionID="4" correct="0">
+						</choice>
+						<choice id="10" content="Respuesta 2004" questionID="4" correct="0">
+						</choice>
+					</question>
+					<question id="5" content="Whyy oh gooodd WHYYY???" questionaireID="6">
+						<choice id="11" content="because I say sooo" questionID="5" correct="1">
+						</choice>
+						<choice id="12" content="have a....." questionID="5" correct="0">
+						</choice>
+					</question>
+				</questionaire>
+				<questionaire id="8" name="" courseID="1" studentID="5">
+					<question id="1" content="hola que tal?" questionaireID="1,2,6">
+						<choice id="1" content="hola" questionID="1" correct="1">
+						</choice>
+						<choice id="2" content="adios" questionID="1" correct="0">
+						</choice>
+					</question>
+					<question id="2" content="" questionaireID="1">
+						<choice id="3" content="" questionID="2" correct="1">
+						</choice>
+					</question>
+					<question id="3" content="Pregunta 1" questionaireID="1,2,6">
+						<choice id="4" content="Respuesta 1" questionID="3" correct="1">
+						</choice>
+						<choice id="5" content="Respuesta 2" questionID="3" correct="0">
+						</choice>
+					</question>
+					<question id="4" content="Pregunta 200" questionaireID="1,2,6">
+						<choice id="6" content="Respuesta 200" questionID="4" correct="1">
+						</choice>
+						<choice id="7" content="Respuesta 2001" questionID="4" correct="0">
+						</choice>
+						<choice id="8" content="Respuesta 2002" questionID="4" correct="0">
+						</choice>
+						<choice id="9" content="Respuesta 2003" questionID="4" correct="0">
+						</choice>
+						<choice id="10" content="Respuesta 2004" questionID="4" correct="0">
+						</choice>
+					</question>
+					<question id="5" content="Whyy oh gooodd WHYYY???" questionaireID="6">
+						<choice id="11" content="because I say sooo" questionID="5" correct="1">
+						</choice>
+						<choice id="12" content="have a....." questionID="5" correct="0">
+						</choice>
+					</question>
+				</questionaire>
+			</course>
+			<course id="2" name="maths">
+			</course>
+			<course id="3" name="Computing">
+			</course>
+		</courses>
+		<answers>
+		</answers>
+	</student>
+</students>

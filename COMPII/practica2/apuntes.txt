@@ -1,0 +1,49 @@
+//ARITMÉTICOS
+PLUS		push(pop2() + pop1())
+SBT			push(pop2() - pop1())
+TMS			push(pop2() * pop1())
+MOD			push(pop2() mod pop1())
+DIV			push(pop2() div pop1())
+NGI			push(-pop())
+
+//LÓGICOS
+AND			push(pop2() and pop1())
+OR			push(pop2() or pop1())
+EQ			push(pop2() = pop1())
+NEQ			push(pop2() <> pop1())
+LT			push(pop2() < pop1())
+LTE			push(pop2() <= pop1())
+GT			push(pop2() > pop1())
+GTE			push(pop2() >= pop1())
+NGB			push(not pop())
+
+//ENTRADA - SALIDA
+RD n		if n = 0 read char and store at frames[pop()] else as int
+WRT n		if n = 0 write pop() as char else as int
+
+//MISCELANEA
+NOP
+SWP			push(pop1(), pop2())
+DUP			push(pop1(), pop1())
+
+//COMENTARIOS
+; <linea>
+
+//REFERENCIA DATOS
+STC n		push(n)
+SRF f o		push(display[DP - f] + o)
+DRF			push(frames[pop()])
+ASG			frames[pop2()] = pop1()
+ASGI		frames[pop1()] = pop2()
+
+//CONTROL DE FLUJO
+ENP n		enter program at n
+LVP			leave program
+JMP n		PC = n
+JMT n		pop()=1? PC = n else PC = PC + 1
+JMF n		pop()=0? PC = n else PC = PC + 1
+OSF s l a	open stack frame (crear BA)
+CSF			close stack frame (destruir BA)
+
+//ETIQUETAS
+L: <instr>

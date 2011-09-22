@@ -1,0 +1,8 @@
+node A
+node B
+node C
+node D
+link a;b;3
+link a;c;23
+link b;c;2
+link c;d;5

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section name="reverseSettings">
+	<item value="false" key="isJBoss"/>
+	<item value="true" key="isHibernateAnnot"/>
+	<item value="true" key="isEjbAnnotation"/>
+	<item value="false" key="isJar"/>
+	<item value="false" key="isHbm"/>
+	<list key="hbmName">
+	</list>
+	<list key="hbmLocation">
+	</list>
+</section>

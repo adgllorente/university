@@ -1,0 +1,54 @@
+%---------------------------------------------------------------------
+% AUTOR: Adrián Gómez Llorente
+% NIP: 605731
+% DESCRIPCIÓN: Programa que cambia las componenentes de dos vectores
+%---------------------------------------------------------------------
+
+Programa p;
+	vector [1..10] de entero v1;
+	vector [1..10] de entero v2;
+	entero i,k;
+	
+%---------------------------------------------------------------------
+ACCION cambiarComponentes(val entero a,b);
+
+principio
+%---------------------------------------------------------------------
+	
+	v1[i..k] := v2[i..k];
+	
+fin
+	
+Principio
+
+	v1[1] := 1;
+	v1[2] := 1;
+	v1[3] := 1;
+	v1[4] := 1;
+	v1[5] := 1;
+	v1[6] := 1;
+	v1[7] := 1;
+	v1[8] := 1;
+	v1[9] := 1;
+	v1[10] := 1;
+	escribir('v1: ->',v1[1], v1[2], v1[3],v1[4], v1[5], v1[6],v1[7], v1[8], v1[9], v1[10], entacar(10), entacar(13));
+	
+	v2[1] := 0;
+	v2[2] := 0;
+	v2[3] := 0;
+	v2[4] := 0;
+	v2[5] := 0;
+	v2[6] := 0;
+	v2[7] := 0;
+	v2[8] := 0;
+	v2[9] := 0;
+	v2[10] := 0;
+
+	escribir('Introduce la primera componente', entacar(10), entacar(13));
+	leer(i);
+	escribir('Introduce la segunda componente', entacar(10), entacar(13));
+	leer(k);
+	cambiarComponentes(i,k);
+	escribir('v1: ->',v1[1], v1[2], v1[3],v1[4], v1[5], v1[6],v1[7], v1[8], v1[9], v1[10], entacar(10), entacar(13));
+
+Fin

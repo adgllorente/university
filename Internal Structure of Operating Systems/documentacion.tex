@@ -1,0 +1,251 @@
+\documentclass[a4paper,11pt,oneside]{article}
+
+\usepackage[cp1252]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[spanish]{babel}
+\usepackage{subfigure}
+\usepackage{listings}
+\usepackage{color}
+
+
+% Definición del formato
+% Basic packages
+\usepackage{graphicx}	% Needed to include figures in the document
+\usepackage[body={0.6in, 8.2in},left=1.25in,right=1.25in]{geometry}
+					% Geometry package for easy page margin
+\usepackage{fancyhdr}
+%\usepackage[nottoc,notlof,notlot]{tocbibind}	% Show Bibliography in table of contents
+\usepackage{textcomp}
+\usepackage{listings}
+\usepackage{hyperref}
+
+% Paragraph structure
+\parindent=0.5cm
+\parskip=5mm
+% Document
+\begin{document}
+
+\bibliographystyle{alphasp}
+
+\thispagestyle{empty}
+
+
+% Portada
+\newpage
+\vspace*{5cm}
+\begin{center}
+\huge{ISOS Exercise: zones.c}\\
+\LARGE{Adrián Gómez Llorente}\\
+\date{November 2010}
+\end{center}
+
+% Índices
+\newpage
+\tableofcontents
+
+\newpage
+\section{Introduction}
+
+In this document we are going to show the results obtained during the exercise zones.c In this exercise we have worked with dynamic allocation and process zones and checking how they work.
+
+This document is going to be separated in chapters shown next:
+
+\begin{itemize}
+	\item Results obtained
+	\item Conclusion
+\end{itemize}
+
+\section{Results obtained}
+
+In this section we are going to see the results obtained.
+
+\subsection{Code executed}
+
+To check the dynamic allocation I have used the code shown next but I have modified it to create different situations to get more information about how the dynamic allocation works.
+
+The code was executed in a system with these requirements:
+
+\begin{itemize}
+	\item Ubuntu running in Virtual Box
+	\item 64 bits system
+\end{itemize}
+
+\subsubsection{Source code}
+
+This code was provided by the teacher and it basically executes a \textit{malloc(0x0001000)} with two \textit{read} instructions to stop the execution and check the memory zones.
+\par \lstinputlisting[language=C,tabsize=2]{zones1.c}
+
+\subsubsection{Modified version}
+
+The previous document was modified just in the malloc instruction with next values:
+
+\begin{itemize}
+	\item 1B
+	\item 132KB
+	\item 140KB
+	\item 1MB
+	\item 1GB
+	\item 10KB
+\end{itemize}
+
+Then I have created a new version of the source code provided, shown next, to free some memory after the execution, to see how zones are modified. 
+
+\lstinputlisting[language=C,tabsize=2]{zones.c}
+
+In the previous code we have followed next steps in allocating memory:
+
+\begin{enumerate}
+	\item We allocate a total of 10000000B divided in two pointers with 5000000B each other.
+	\item We free one pointer
+	\item We free the other pointer
+\end{enumerate}
+
+\subsection{Results obtained with each code}
+
+Every code was executed and pmap was used to obtain some results about dynamic memory and memory allocation. In this section all the results are shown but just the lines related with the relevant zones.
+
+\subsubsection{Base Result: Without allocating memory} \label{sec: base-result}
+
+Here we can see how the process zones are distributed without allocating any memory
+
+\begin{verbatim}
+b77af000      4K rw---    [ anon ]
+b77be000      8K rw---    [ anon ]
+bfe51000    132K rw---    [ stack ]
+ total     1680K
+\end{verbatim}
+
+As we can see we have allocated 1680K for this process without allocating any memory amount. I am not going to take care about the memory allocated for the libs used in the execution, because they will be always the same.
+
+\subsubsection{Result 1: Executing source code (1B)}
+
+Code executing a \textit{malloc(1)} with 1 Byte. The results are:
+
+\begin{verbatim}
+08110000    132K rw---    [ anon ]
+b78bd000      4K rw---    [ anon ]
+b78cc000      8K rw---    [ anon ]
+bf7f5000    132K rw---    [ stack ]
+ total     1812K
+\end{verbatim}
+
+As we can see 132KB has been allocated despite of I have just allocated 1B, so it means that there is a minimum amount of memory to allocate for one process and this minimum is 132KB.
+
+\subsubsection{Result 2: Executing source code (132KB)}
+
+With this execution I have tried to allocate 132KB. As I have said, 132KB is the minimum amount of memory allocated for a process, so in this example the system should allocate more than 132KB.
+
+\begin{verbatim}
+b7857000    140K rw---    [ anon ]
+b7888000      8K rw---    [ anon ]
+bf92f000    132K rw---    [ stack ]
+ total     1816K
+\end{verbatim}
+
+As we can see in the results returned by pmap 140KB have been allocated for our process, that's another 8KB fragment given plus the minimum 132KB. So it seems that the system allocates a minimum of 132KB and if a process needs more memory it will allocate 8KB fragments to reach the memory needed by the process.
+
+\subsubsection{Result 3: Executing source code (140KB)}
+
+In this example we have executed a malloc with 140KB that's the sum of the minimum of 132KB plus the first 8KB fragment.
+
+\begin{verbatim}
+b77f4000    148K rw---    [ anon ]
+b7827000      8K rw---    [ anon ]
+bfb8f000    132K rw---    [ stack ]
+ total     1824K
+\end{verbatim}
+
+In the previous results we can see that another 8KB fragment has been given.
+
+\subsubsection{Result 4: Executing source code (1MB)}
+
+Let's try allocating 1MB:
+
+\begin{verbatim}
+b7636000   1032K rw---    [ anon ]
+b7746000      8K rw---    [ anon ]
+bfbe5000    132K rw---    [ stack ]
+ total     2708K
+\end{verbatim}
+
+As we can see a total of 1032KB have been allocated. It means that the system has allocated a 1024KB plus another 8KB fragment.
+
+\subsubsection{Result 5: Executing source code (1GB)}
+
+\begin{verbatim}
+778b2000 1048584K rw---    [ anon ]
+b78c2000      8K rw---    [ anon ]
+bff31000    132K rw---    [ stack ]
+ total  1050260K	
+\end{verbatim}
+
+As we can see in the previous result, it happens the same as in the 4 previous situations. In this case we have allocated 1GB and the system has given us 1GB plus another 8KB fragment.
+
+\subsubsection{Result 6: Executing source code (10KB)}
+
+\begin{verbatim}
+08777000    140K rw---    [ anon ]
+b7882000      4K rw---    [ anon ]
+b7891000      8K rw---    [ anon ]
+bf805000    132K rw---    [ stack ]
+ total     1820K
+\end{verbatim}
+
+\subsubsection{Result 5: Modified version}
+
+In this part I have executed a modified version of the source code in which we allocate memory for two pointers and then I free the pointers in two steps. The results are shown next.
+
+\textbf{Executing a malloc(5000000B) and malloc(5000000B)}
+
+We execute two malloc with 5000000B each other.
+
+\begin{verbatim}
+b6ef8000   9772K rw---    [ anon ]
+b7891000      8K rw---    [ anon ]
+bfdd0000    132K rw---    [ stack ]
+ total    11448K
+\end{verbatim}
+
+As we can see, the memory allocator algorithm has given the process another 9772KB and this is 10000000B plus another 8KB fragment.
+
+\textbf{Executing the first free}
+
+We have executed the first free of 5000000B:
+
+\begin{verbatim}
+b6ef8000   4884K rw---    [ anon ]
+b7882000      4K rw---    [ anon ]
+b7891000      8K rw---    [ anon ]
+bfdd0000    132K rw---    [ stack ]
+ total     6564K
+\end{verbatim}
+
+There should be allocated just 5000000B from the second pointer. That's what we can see in the results returned, we only have allocated 4884K plus another 8KB fragment.
+
+\textbf{Executing the second free}
+
+In this final step, we have executed the second free so we shouldn't have any amount of memory allocated.
+
+\begin{verbatim}
+b7882000      4K rw---    [ anon ]
+b7891000      8K rw---    [ anon ]
+bfdd0000    132K rw---    [ stack ]
+ total     1680K
+\end{verbatim}
+
+That's what have happened. The process only has 1680KB allocated and this is the same memory allocated for a process without any memory allocated (See base result in the chapter \ref{sec: base-result}
+
+\section{Conclusion}
+
+The conclusion achieved with all the results obtained is that the memory allocation algorithm follows next steps to assign memory for a process:
+
+\begin{enumerate}
+	\item If a process needs memory and this memory is less than 132KB it assigns the process a minimum fragment of 132KB.
+	\item If a process needs more memory than 132KB it assigns as many 8KB fragments as needed to satisfy the needs of the process.
+	\item If a process execute a free of any amount of memory this memory is not longer allocated for the process and it will be available for another memory allocation.
+\end{enumerate}
+
+\end{document}
+
+
+

@@ -1,0 +1,81 @@
+%-------------------------------------------------------------------
+programa notaMedia;
+%-------------------------------------------------------------------
+
+entero suma, media, i, rdm;
+vector [1..10] de entero notas;
+
+%-------------------------------------------------------------------
+ACCION random(ref entero i);
+
+principio
+%-------------------------------------------------------------------
+
+	si (rdm = 1) or (rdm = 6) ent
+		i := 7;
+		rdm := rdm + 1;
+	si_no
+		si (rdm = 2) or (rdm = 7) ent
+			i := 6;
+			rdm := rdm + 1;
+		si_no
+			si (rdm = 3) or (rdm = 8) ent
+				i := 8;
+				rdm := rdm + 1;
+			si_no
+				si (rdm = 4) or (rdm = 9) ent
+					i := 4;
+					rdm := rdm + 1;
+				si_no
+					si (rdm = 5) or (rdm = 10) ent
+						i := 10;
+						rdm := rdm + 1;
+					si_no
+						i := 9;
+						rdm := rdm - 5;
+					fsi
+				fsi
+			fsi
+		fsi
+	fsi
+fin
+
+%-------------------------------------------------------------------
+ACCION llenarNotas;
+
+principio
+%-------------------------------------------------------------------
+	i := 1;
+	mq i <= 10
+		random(notas[i]);
+		escribir('La nota ', i, ' es: ', notas[i],entacar(13),entacar(10));
+		i := i + 1;
+	fmq
+fin
+
+%-------------------------------------------------------------------
+principio
+%-------------------------------------------------------------------
+
+	suma := 0;
+	media := 0;
+	escribir('Introduce un número entre 1 y 10, para generar las notas: ');
+	leer(rdm);
+	
+	si rdm > 10 ent
+		escribir('ERROR!');
+	si_no
+		llenarNotas;
+		
+		i := 1;
+		mq i <= 10
+			suma := suma + notas[i];
+			i := i + 1;
+		fmq
+		
+		media := suma div 10;
+		
+		escribir('La media es: ', media, '.',entacar(13),entacar(10));
+
+	fsi
+fin

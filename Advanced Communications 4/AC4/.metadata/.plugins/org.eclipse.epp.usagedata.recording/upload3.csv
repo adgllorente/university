@@ -1,0 +1,26 @@
+what,kind,bundleId,bundleVersion,description,time
+started,bundle,org.eclipse.mylyn.tasks.ui,3.3.1.v20091215-0000-e3x,"org.eclipse.mylyn.tasks.ui",1267716433739
+started,bundle,org.eclipse.mylyn.team.ui,3.3.1.v20091215-0000-e3x,"org.eclipse.mylyn.team.ui",1267716433739
+started,bundle,org.eclipse.team.svn.core,0.7.8.I20090904-1300,"org.eclipse.team.svn.core",1267716433739
+started,bundle,org.eclipse.team.svn.mylyn,0.7.8.I20090904-1300,"org.eclipse.team.svn.mylyn",1267716433739
+started,bundle,org.eclipse.team.svn.ui,0.7.8.I20090904-1300,"org.eclipse.team.svn.ui",1267716433739
+started,bundle,org.polarion.eclipse.team.svn.connector.javahl,2.2.1.I20091009-1900,"org.polarion.eclipse.team.svn.connector.javahl",1267716433739
+started,bundle,org.polarion.eclipse.team.svn.connector.javahl15,2.2.1.I20091009-1900,"org.polarion.eclipse.team.svn.connector.javahl15",1267716433739
+started,bundle,org.polarion.eclipse.team.svn.connector.javahl16,2.2.1.I20091009-1900,"org.polarion.eclipse.team.svn.connector.javahl16",1267716433739
+started,bundle,org.polarion.eclipse.team.svn.connector.svnkit,2.2.1.I20091009-1900,"org.polarion.eclipse.team.svn.connector.svnkit",1267716433739
+started,bundle,org.polarion.eclipse.team.svn.connector.svnkit15,2.2.1.I20091009-1900,"org.polarion.eclipse.team.svn.connector.svnkit15",1267716433739
+started,bundle,org.polarion.eclipse.team.svn.connector.svnkit16,2.2.1.I20091009-1900,"org.polarion.eclipse.team.svn.connector.svnkit16",1267716433739
+os,sysinfo,,,"win32",1267716433755
+arch,sysinfo,,,"x86",1267716433755
+ws,sysinfo,,,"win32",1267716433755
+locale,sysinfo,,,"es_ES",1267716433755
+processors,sysinfo,,,"1",1267716433755
+java.runtime.name,sysinfo,,,"Java(TM) SE Runtime Environment",1267716433755
+java.runtime.version,sysinfo,,,"1.6.0_18-b07",1267716433755
+java.specification.name,sysinfo,,,"Java Platform API Specification",1267716433755
+java.specification.vendor,sysinfo,,,"Sun Microsystems Inc.",1267716433755
+java.specification.version,sysinfo,,,"1.6",1267716433755
+java.vendor,sysinfo,,,"Sun Microsystems Inc.",1267716433755
+java.version,sysinfo,,,"1.6.0_18",1267716433755
+java.vm.info,sysinfo,,,"mixed mode, sharing",1267716433755
+java.vm.name,sysinfo,,,"Java HotSpot(TM) Client VM",1267716433755

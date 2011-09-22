@@ -1,0 +1,42 @@
+
+<students>
+	<student id="1" name="Adrián" surname="Gómez" matriculationID="0904327G" password="qwerty">
+		<courses>
+			<course id="1" name="Maths">
+				<questionaire id="1" name="Questionaire 1" courseID="1" studentID="1">
+					<question id="1" content="Question 1 in Questionaire 1" questionaireID="1">
+						<choice id="1" content="Choice 1 for Question 1 in Questionaire 1" questionID="1" correct="1"></choice>
+						<choice id="5"
+							content="Choice 2 for Question 1 in Questionaire 1"
+							questionID="1" correct="0">
+						</choice></question>
+					<question id="2"
+						content="Question 2 in Questionaire 1" questionaireID="1">
+						<choice id="2"
+							content="Choice 1 for Question 2 in Questionaire 1"
+							questionID="2" correct="1">
+						</choice>
+					</question>
+					<question id="3"
+						content="Question 3 in Questionaire 1" questionaireID="1">
+						<choice id="3"
+							content="Choice 1 for Question 3 in Questionaire 1"
+							questionID="3" correct="1">
+						</choice>
+					</question></questionaire>
+				<questionaire id="2" name="Questionaire 2" courseID="1" studentID="1">
+					<question id="4"
+						content="Question 1 in Questionaire 2" questionaireID="2">
+						<choice id="4"
+							content="Choice 1 for Question 1 in Questionaire 2"
+							questionID="4" correct="1">
+						</choice>
+					</question>
+				</questionaire></course>
+			<course id="2" name="Philosophy"></course>
+			<course id="3" name="Religion"></course></courses>
+		<answers>
+			<answer studentID="1" questionaireID="2" questionID="4" choiceID="4" id="1"></answer>
+			<answer studentID="1" questionaireID="1" questionID="1"
+				choiceID="5" id="2">
+			</answer></answers></student></students>

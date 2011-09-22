@@ -1,0 +1,17 @@
+1769:   ./a.out
+0080c000      4K r-x--    [ anon ]
+00912000    112K r-x--  /lib/ld-2.12.1.so
+0092e000      4K r----  /lib/ld-2.12.1.so
+0092f000      4K rw---  /lib/ld-2.12.1.so
+00d0b000   1372K r-x--  /lib/libc-2.12.1.so
+00e62000      4K -----  /lib/libc-2.12.1.so
+00e63000      8K r----  /lib/libc-2.12.1.so
+00e65000      4K rw---  /lib/libc-2.12.1.so
+00e66000     12K rw---    [ anon ]
+08048000      4K r-x--  /home/kuve/Documentos/ISOS/zones/a.out
+08049000      4K r----  /home/kuve/Documentos/ISOS/zones/a.out
+0804a000      4K rw---  /home/kuve/Documentos/ISOS/zones/a.out
+b77af000      4K rw---    [ anon ]
+b77be000      8K rw---    [ anon ]
+bfe51000    132K rw---    [ stack ]
+ total     1680K

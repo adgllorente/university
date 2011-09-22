@@ -1,0 +1,6 @@
+node n1
+node n2
+node n3
+link n1;n2;10
+link n2;n3;20
+link n3;n1;5

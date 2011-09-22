@@ -1,0 +1,57 @@
+%---------------------------------------------------------------------
+% AUTOR: Adrián Gómez Llorente
+% NIP: 605731
+% DESCRIPCIÓN: Programa para comprobar operaciones
+%---------------------------------------------------------------------
+
+Programa p;
+	entero i,k,l;
+	caracter j;
+	booleano b;
+principio
+
+	%LECTURAS
+	escribir('Introduce un numero', entacar(10), entacar(13));
+	leer(j);
+	escribir(j, entacar(10), entacar(13));
+	escribir('Introduce 3 números', entacar(10), entacar(13));
+	leer(i,k,l);
+	escribir(i,k,l, entacar(10), entacar(13));
+	
+	%ASIGNACIONES
+	escribir('Asignación', entacar(10), entacar(13));
+	escribir(i, entacar(10), entacar(13));
+	i := 2;
+	escribir(i, entacar(10), entacar(13));
+	
+	%OPERADOR ADITIVO
+	i := 2 + 3 + 20;
+	i := i + i + i + i + 4;
+	escribir(i, entacar(10), entacar(13));
+	
+	%OPERADOR MULTIPLICATIVO
+	i := 1;
+	i := 4 * i + 100;
+	escribir(i, entacar(10), entacar(13));
+	
+	%BOOLEANOS
+	b := 4 < 2;
+	
+	%SELECCION
+	escribir('SELECCION', entacar(10), entacar(13));
+	si 4 < 2 ent
+		escribir('Ha sido si', entacar(10), entacar(13));
+	si_no
+		escribir('Ha sido sino', entacar(10), entacar(13));
+	fsi
+	
+	%MIENTRAS QUE
+	escribir('MIENTRAS QUE', entacar(10), entacar(13));
+	escribir('Voy a escribir números del 1 al 10', entacar(10), entacar(13));
+	i:=1;
+	mq i <= 10
+		escribir(i);
+		i := i + 1;
+	fmq
+	
+fin

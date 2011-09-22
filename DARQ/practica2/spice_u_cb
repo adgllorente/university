@@ -1,0 +1,145 @@
+-l1-usize 16384
+-l1-ubsize 16
+-l1-usbsize 16
+-l1-uassoc 4
+-l1-urepl l
+-l1-ufetch d
+-l1-uwalloc a
+-l1-uwback a
+-skipcount 0
+-flushcount 0
+-maxcount 0
+-stat-interval 0
+-informat d
+-on-trigger 0x0
+-off-trigger 0x0
+
+---Simulation begins.
+---Simulation complete.
+l1-ucache
+ Metrics                      Total           Instrn           Data            Read           Write            Misc
+ -----------------            ------          ------          ------          ------          ------          ------
+ Demand Fetches              1000001          782764          217237          150699           66538               0
+  Fraction of total           1.0000          0.7828          0.2172          0.1507          0.0665          0.0000
+
+ Demand Misses                  9024            6003            3021            1891            1130               0
+  Demand miss rate            0.0090          0.0077          0.0139          0.0125          0.0170          0.0000
+
+ Multi-block refs                 0
+ Bytes From Memory            144384
+ ( / Demand Fetches)          0.1444
+ Bytes To Memory               22608
+ ( / Demand Writes)           0.3398
+ Total Bytes r/w Mem          166992
+ ( / Demand Fetches)          0.1670
+
+---------------------------------------------------------------
+
+-l1-usize 16384
+-l1-ubsize 32
+-l1-usbsize 32
+-l1-uassoc 4
+-l1-urepl l
+-l1-ufetch d
+-l1-uwalloc a
+-l1-uwback a
+-skipcount 0
+-flushcount 0
+-maxcount 0
+-stat-interval 0
+-informat d
+-on-trigger 0x0
+-off-trigger 0x0
+
+---Simulation begins.
+---Simulation complete.
+l1-ucache
+ Metrics                      Total           Instrn           Data            Read           Write            Misc
+ -----------------            ------          ------          ------          ------          ------          ------
+ Demand Fetches              1000001          782764          217237          150699           66538               0
+  Fraction of total           1.0000          0.7828          0.2172          0.1507          0.0665          0.0000
+
+ Demand Misses                  6558            4448            2110            1450             660               0
+  Demand miss rate            0.0066          0.0057          0.0097          0.0096          0.0099          0.0000
+
+ Multi-block refs                 0
+ Bytes From Memory            209856
+ ( / Demand Fetches)          0.2099
+ Bytes To Memory               28224
+ ( / Demand Writes)           0.4242
+ Total Bytes r/w Mem          238080
+ ( / Demand Fetches)          0.2381
+
+-----------------------------------------------------------
+
+-l1-usize 16384
+-l1-ubsize 64
+-l1-usbsize 64
+-l1-uassoc 4
+-l1-urepl l
+-l1-ufetch d
+-l1-uwalloc a
+-l1-uwback a
+-skipcount 0
+-flushcount 0
+-maxcount 0
+-stat-interval 0
+-informat d
+-on-trigger 0x0
+-off-trigger 0x0
+
+---Simulation begins.
+---Simulation complete.
+l1-ucache
+ Metrics                      Total           Instrn           Data            Read           Write            Misc
+ -----------------            ------          ------          ------          ------          ------          ------
+ Demand Fetches              1000001          782764          217237          150699           66538               0
+  Fraction of total           1.0000          0.7828          0.2172          0.1507          0.0665          0.0000
+
+ Demand Misses                  5834            3928            1906            1451             455               0
+  Demand miss rate            0.0058          0.0050          0.0088          0.0096          0.0068          0.0000
+
+ Multi-block refs                 0
+ Bytes From Memory            373376
+ ( / Demand Fetches)          0.3734
+ Bytes To Memory               40960
+ ( / Demand Writes)           0.6156
+ Total Bytes r/w Mem          414336
+ ( / Demand Fetches)          0.4143
+
+-----------------------------------------------------------------
+
+-l1-usize 16384
+-l1-ubsize 128
+-l1-usbsize 128
+-l1-uassoc 4
+-l1-urepl l
+-l1-ufetch d
+-l1-uwalloc a
+-l1-uwback a
+-skipcount 0
+-flushcount 0
+-maxcount 0
+-stat-interval 0
+-informat d
+-on-trigger 0x0
+-off-trigger 0x0
+
+---Simulation begins.
+---Simulation complete.
+l1-ucache
+ Metrics                      Total           Instrn           Data            Read           Write            Misc
+ -----------------            ------          ------          ------          ------          ------          ------
+ Demand Fetches              1000001          782764          217237          150699           66538               0
+  Fraction of total           1.0000          0.7828          0.2172          0.1507          0.0665          0.0000
+
+ Demand Misses                  5931            3813            2118            1714             404               0
+  Demand miss rate            0.0059          0.0049          0.0097          0.0114          0.0061          0.0000
+
+ Multi-block refs                 0
+ Bytes From Memory            759168
+ ( / Demand Fetches)          0.7592
+ Bytes To Memory               77312
+ ( / Demand Writes)           1.1619
+ Total Bytes r/w Mem          836480
+ ( / Demand Fetches)          0.8365

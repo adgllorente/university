@@ -1,0 +1,238 @@
+-l1-isize 8192
+-l1-dsize 8192
+-l1-ibsize 16
+-l1-dbsize 16
+-l1-isbsize 16
+-l1-dsbsize 16
+-l1-iassoc 1
+-l1-dassoc 1
+-l1-irepl l
+-l1-drepl l
+-l1-ifetch d
+-l1-dfetch d
+-l1-dwalloc a
+-l1-dwback a
+-skipcount 0
+-flushcount 0
+-maxcount 0
+-stat-interval 0
+-informat d
+-on-trigger 0x0
+-off-trigger 0x0
+
+---Simulation begins.
+---Simulation complete.
+l1-icache
+ Metrics                      Total           Instrn           Data            Read           Write            Misc
+ -----------------            ------          ------          ------          ------          ------          ------
+ Demand Fetches               782764          782764               0               0               0               0
+  Fraction of total           1.0000          1.0000          0.0000          0.0000          0.0000          0.0000
+
+ Demand Misses                 24681           24681               0               0               0               0
+  Demand miss rate            0.0315          0.0315          0.0000          0.0000          0.0000          0.0000
+
+ Multi-block refs                 0
+ Bytes From Memory            394896
+ ( / Demand Fetches)          0.5045
+ Bytes To Memory                   0
+ ( / Demand Writes)           0.0000
+ Total Bytes r/w Mem          394896
+ ( / Demand Fetches)          0.5045
+
+l1-dcache
+ Metrics                      Total           Instrn           Data            Read           Write            Misc
+ -----------------            ------          ------          ------          ------          ------          ------
+ Demand Fetches               217237               0          217237          150699           66538               0
+  Fraction of total           1.0000          0.0000          1.0000          0.6937          0.3063          0.0000
+
+ Demand Misses                  8283               0            8283            6659            1624               0
+  Demand miss rate            0.0381          0.0000          0.0381          0.0442          0.0244          0.0000
+
+ Multi-block refs                 0
+ Bytes From Memory            132528
+ ( / Demand Fetches)          0.6101
+ Bytes To Memory               48096
+ ( / Demand Writes)           0.7228
+ Total Bytes r/w Mem          180624
+ ( / Demand Fetches)          0.8315
+
+----------------------------------------------------------------
+
+-l1-isize 8192
+-l1-dsize 8192
+-l1-ibsize 32
+-l1-dbsize 32
+-l1-isbsize 32
+-l1-dsbsize 32
+-l1-iassoc 1
+-l1-dassoc 1
+-l1-irepl l
+-l1-drepl l
+-l1-ifetch d
+-l1-dfetch d
+-l1-dwalloc a
+-l1-dwback a
+-skipcount 0
+-flushcount 0
+-maxcount 0
+-stat-interval 0
+-informat d
+-on-trigger 0x0
+-off-trigger 0x0
+
+---Simulation begins.
+---Simulation complete.
+l1-icache
+ Metrics                      Total           Instrn           Data            Read           Write            Misc
+ -----------------            ------          ------          ------          ------          ------          ------
+ Demand Fetches               782764          782764               0               0               0               0
+  Fraction of total           1.0000          1.0000          0.0000          0.0000          0.0000          0.0000
+
+ Demand Misses                 15868           15868               0               0               0               0
+  Demand miss rate            0.0203          0.0203          0.0000          0.0000          0.0000          0.0000
+
+ Multi-block refs                 0
+ Bytes From Memory            507776
+ ( / Demand Fetches)          0.6487
+ Bytes To Memory                   0
+ ( / Demand Writes)           0.0000
+ Total Bytes r/w Mem          507776
+ ( / Demand Fetches)          0.6487
+
+l1-dcache
+ Metrics                      Total           Instrn           Data            Read           Write            Misc
+ -----------------            ------          ------          ------          ------          ------          ------
+ Demand Fetches               217237               0          217237          150699           66538               0
+  Fraction of total           1.0000          0.0000          1.0000          0.6937          0.3063          0.0000
+
+ Demand Misses                  7504               0            7504            5734            1770               0
+  Demand miss rate            0.0345          0.0000          0.0345          0.0380          0.0266          0.0000
+
+ Multi-block refs                 0
+ Bytes From Memory            240128
+ ( / Demand Fetches)          1.1054
+ Bytes To Memory               83040
+ ( / Demand Writes)           1.2480
+ Total Bytes r/w Mem          323168
+ ( / Demand Fetches)          1.4876
+
+-------------------------------------------------------------
+
+-l1-isize 8192
+-l1-dsize 8192
+-l1-ibsize 64
+-l1-dbsize 64
+-l1-isbsize 64
+-l1-dsbsize 64
+-l1-iassoc 1
+-l1-dassoc 1
+-l1-irepl l
+-l1-drepl l
+-l1-ifetch d
+-l1-dfetch d
+-l1-dwalloc a
+-l1-dwback a
+-skipcount 0
+-flushcount 0
+-maxcount 0
+-stat-interval 0
+-informat d
+-on-trigger 0x0
+-off-trigger 0x0
+
+---Simulation begins.
+---Simulation complete.
+l1-icache
+ Metrics                      Total           Instrn           Data            Read           Write            Misc
+ -----------------            ------          ------          ------          ------          ------          ------
+ Demand Fetches               782764          782764               0               0               0               0
+  Fraction of total           1.0000          1.0000          0.0000          0.0000          0.0000          0.0000
+
+ Demand Misses                 11565           11565               0               0               0               0
+  Demand miss rate            0.0148          0.0148          0.0000          0.0000          0.0000          0.0000
+
+ Multi-block refs                 0
+ Bytes From Memory            740160
+ ( / Demand Fetches)          0.9456
+ Bytes To Memory                   0
+ ( / Demand Writes)           0.0000
+ Total Bytes r/w Mem          740160
+ ( / Demand Fetches)          0.9456
+
+l1-dcache
+ Metrics                      Total           Instrn           Data            Read           Write            Misc
+ -----------------            ------          ------          ------          ------          ------          ------
+ Demand Fetches               217237               0          217237          150699           66538               0
+  Fraction of total           1.0000          0.0000          1.0000          0.6937          0.3063          0.0000
+
+ Demand Misses                  7557               0            7557            6039            1518               0
+  Demand miss rate            0.0348          0.0000          0.0348          0.0401          0.0228          0.0000
+
+ Multi-block refs                 0
+ Bytes From Memory            483648
+ ( / Demand Fetches)          2.2264
+ Bytes To Memory              144128
+ ( / Demand Writes)           2.1661
+ Total Bytes r/w Mem          627776
+ ( / Demand Fetches)          2.8898
+ 
+ --------------------------------------------------------------------
+ 
+ -l1-isize 8192
+-l1-dsize 8192
+-l1-ibsize 128
+-l1-dbsize 128
+-l1-isbsize 128
+-l1-dsbsize 128
+-l1-iassoc 1
+-l1-dassoc 1
+-l1-irepl l
+-l1-drepl l
+-l1-ifetch d
+-l1-dfetch d
+-l1-dwalloc a
+-l1-dwback a
+-skipcount 0
+-flushcount 0
+-maxcount 0
+-stat-interval 0
+-informat d
+-on-trigger 0x0
+-off-trigger 0x0
+
+---Simulation begins.
+---Simulation complete.
+l1-icache
+ Metrics                      Total           Instrn           Data            Read           Write            Misc
+ -----------------            ------          ------          ------          ------          ------          ------
+ Demand Fetches               782764          782764               0               0               0               0
+  Fraction of total           1.0000          1.0000          0.0000          0.0000          0.0000          0.0000
+
+ Demand Misses                  9018            9018               0               0               0               0
+  Demand miss rate            0.0115          0.0115          0.0000          0.0000          0.0000          0.0000
+
+ Multi-block refs                 0
+ Bytes From Memory           1154304
+ ( / Demand Fetches)          1.4747
+ Bytes To Memory                   0
+ ( / Demand Writes)           0.0000
+ Total Bytes r/w Mem         1154304
+ ( / Demand Fetches)          1.4747
+
+l1-dcache
+ Metrics                      Total           Instrn           Data            Read           Write            Misc
+ -----------------            ------          ------          ------          ------          ------          ------
+ Demand Fetches               217237               0          217237          150699           66538               0
+  Fraction of total           1.0000          0.0000          1.0000          0.6937          0.3063          0.0000
+
+ Demand Misses                  8519               0            8519            7060            1459               0
+  Demand miss rate            0.0392          0.0000          0.0392          0.0468          0.0219          0.0000
+
+ Multi-block refs                 0
+ Bytes From Memory           1090432
+ ( / Demand Fetches)          5.0196
+ Bytes To Memory              316928
+ ( / Demand Writes)           4.7631
+ Total Bytes r/w Mem         1407360
+ ( / Demand Fetches)          6.4785
+

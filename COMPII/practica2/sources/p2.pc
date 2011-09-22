@@ -1,0 +1,80 @@
+%---------------------------------------------------------------------
+% AUTOR: Adrián Gómez Llorente
+% NIP: 605731
+% DESCRIPCIÓN: Programa para probar todos los errores relacionados con
+% los operadores y las operaciones con distintos tipos de
+% identificadores y expresiones
+%---------------------------------------------------------------------
+
+Programa p;
+
+        entero e;
+		booleano b;
+		caracter c;
+		vector[1..300] de entero v1;
+		vector[1..20] de entero v2;
+		vector['a'..'c'] de caracter v3;
+		vector['a'..'z'] de caracter v4;
+		vector[1..10] de booleano v5;
+Principio
+	
+	%-->OPERADOR_MULTIPLICATIVO
+	e := 5; %OK
+	e := e*3; %OK
+	e := e div e; %OK
+	e := e mod e; %OK
+	b := true and true; %OK
+	e := v1[1*e] * v1[1*6]; %OK
+	
+	%-->OPERADOR_ADITIVO
+	e := 2+3; %OK
+	e := e+5; %OK
+	e := 5-e; %OK
+	b := true or true; %OK
+	e := v1[1+e] + v1[5+5]; %OK
+	
+	%-->OPERADOR_RELACIONAL
+	b := 5<3+5; %OK
+	b := 3>5; %OK
+	b := 3>=5; %OK
+	b := 6<=6; %OK
+	b := e=2; %OK
+	b := true <> false; %OK
+	b := v1[2+3] < v2[e]; %OK
+	b := v1[2+3] <= v2[e]; %OK
+	b := v1[2+3] > v2[e]; %OK
+	b := v1[2+3] >= v2[e]; %OK
+	b := v1[2+3] <> v2[e]; %OK
+	b := v5[1]; %OK
+	
+	%-->MEZCLA_DE_OPERADORES
+	e := 2+3+caraent('c')*5+v1[caraent('c')+10]; %OK
+	b := v1[caraent('d')] < v1[2+3] + v1[4*1]; %OK
+	c := entacar(caraent('c')+5*7+caraent('a')); %OK
+	
+	%-->MIENTRAS_QUE
+	Mq v1[1+2+e] <> 0 %OK
+		e := 1;
+	FMq
+	
+	Mq 5 %NOK
+		e := 1;
+	FMq
+	
+	Mq e <> 0 %OK
+		e := 1;
+	FMq
+	
+	%-->SI
+	Si e = 0 ENT %OK
+		e := 1;
+	FSi
+	
+	Si e ENT %NOK
+		e := 1;
+	FSi
+	
+	Si e+10 < 5 ENT %OK
+		e := 1;
+	FSi
+Fin
